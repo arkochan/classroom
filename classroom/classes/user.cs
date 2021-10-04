@@ -14,7 +14,7 @@ namespace classroom.classes
         protected string email { get; set; }
         protected string password { get; set; }
         protected string phone { get; set; }
-        protected string name { get; set; }
+        protected string user_name { get; set; }
         protected string notification { get; set; }
         protected string messeges { get; set; }
         protected int role { get; set; }
@@ -23,7 +23,7 @@ namespace classroom.classes
 
         protected user(string _name, string _password, string _email, string _phone)
         {
-            name = _name;
+            user_name = _name;
             password = _password;
             email = _email;
             phone = _phone;
