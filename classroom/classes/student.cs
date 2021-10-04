@@ -8,5 +8,6 @@ namespace classroom.classes
 {
     class student: user
     {
+        int a;
     }
 }
