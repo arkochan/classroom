@@ -18,7 +18,7 @@
             <PasswordBox Height="20" Name="pwbox"/>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Signup" Height="20" Width="50"/>
+            <Button Content="Signup" Height="20" Width="50" Click="Button_Click"/>
         </StackPanel>
         
     </Grid>

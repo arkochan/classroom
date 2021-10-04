@@ -23,6 +23,9 @@ namespace classroom
         public MainWindow()
         {
             InitializeComponent();
+            Views.NewUser w2 = new Views.NewUser();
+            w2.Show();
+
             
         }
     }

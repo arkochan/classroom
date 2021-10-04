@@ -23,5 +23,10 @@ namespace classroom.Views
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var user1 = new classes.student(namebox.Text, pwbox.Password, namebox.Text, namebox.Text); 
+        }
     }
 }
