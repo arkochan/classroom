@@ -8,7 +8,8 @@ namespace classroom.classes
 {
     class student: user
     {
-        private List<string> enrolledCourses = new List<string>();
+        private List<course> enrolledCourses = new List<course>();
+
 
         public void addCourses(string courseID) // on review
         {
