@@ -10,23 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace classroom
+namespace classroom.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for NewUser.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NewUser : Window
     {
-        public MainWindow()
+        public NewUser()
         {
             InitializeComponent();
-            Views.NewUser w2 = new Views.NewUser();
-            w2.Show();
+        }
 
-            
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var user1 = new classes.student(namebox.Text, pwbox.Password, namebox.Text, namebox.Text); 
         }
     }
 }
