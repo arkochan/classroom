@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace classroom.classes
 {
-    abstract class result
+    class CourseResult
     {
-        protected float mark { get; set; }
-        protected int id { get; set; }
-
     }
 }

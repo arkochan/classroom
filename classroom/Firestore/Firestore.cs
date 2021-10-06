@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace classroom.classes
+namespace classroom.Firestore
 {
-    class examResult
+    class Firestore
     {
+        classes.User us1 = new classes.User();//
+        
+        
     }
 }

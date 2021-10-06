@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace classroom.classes
 {
-    class teacher:user
+    class ExamResult
     {
-        List<course> enrolledCourses = new List<course>();
-        List<student> tracker = new List<student>();
-
     }
 }

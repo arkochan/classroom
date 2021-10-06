@@ -26,7 +26,7 @@ namespace classroom.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var user1 = new classes.student(namebox.Text, pwbox.Password, namebox.Text, namebox.Text); 
+            var user1 = new classes.Student(namebox.Text, pwbox.Password, namebox.Text, namebox.Text); 
         }
     }
 }

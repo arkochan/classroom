@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace classroom.classes
 {
-    abstract class user
+    class User
     {
 
-        protected string department { get; set; }
+        string department { get; set; }
         protected int age {  get; set;  }  // review
         protected string email { get; set; }
         protected string password { get; set; }
@@ -21,17 +21,26 @@ namespace classroom.classes
         
         protected string uniqueID;
 
-        protected user(string _name, string _password, string _email, string _phone)
+        public List<Room> asStudent = new List<Room>();
+        public List<Room> asTeacher = new List<Room>();
+
+        //protected user(string _name, string _password, string _email, string _phone)
+        //{
+        //    user_name = _name;
+        //    password = _password;
+        //    email = _email;
+        //    phone = _phone;
+        //}
+
+        ~User() { }
+
+        public bool sendMessages(string msg)
         {
-            user_name = _name;
-            password = _password;
-            email = _email;
-            phone = _phone;
+            return true;
         }
+        protected void generateUniqueID()
+        {
 
-        ~user() { }
-
-        public abstract bool sendMessages(string msg, string _userName);
-        protected abstract void generateUniqueID();
+        }
     }
 }
