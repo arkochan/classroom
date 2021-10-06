@@ -6,25 +6,26 @@ using System.Threading.Tasks;
 
 namespace classroom.classes
 {
-    class User
+    public class User
     {
 
         string department { get; set; }
-        protected int age {  get; set;  }  // review
-        protected string email { get; set; }
-        protected string password { get; set; }
-        protected string phone { get; set; }
-        protected string user_name { get; set; }
-        protected string notification { get; set; }
-        protected string messeges { get; set; }
-        protected int role { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public string phone { get; set; }
+        public string user_name { get; set; }
+        public string notification { get; set; }
+        public string messeges { get; set; }
+        public int role { get; set; }
         
-        protected string uniqueID;
+        public string uniqueID;
 
-        public List<Room> asStudent = new List<Room>();
-        public List<Room> asTeacher = new List<Room>();
+        public List<string> roomsTeacher = new List<string>();
+        public List<string> roomsStudent = new List<string>();
+        
+        
 
-        //protected user(string _name, string _password, string _email, string _phone)
+        //public user(string _name, string _password, string _email, string _phone)
         //{
         //    user_name = _name;
         //    password = _password;
@@ -38,7 +39,7 @@ namespace classroom.classes
         {
             return true;
         }
-        protected void generateUniqueID()
+        public void generateUniqueID()
         {
 
         }

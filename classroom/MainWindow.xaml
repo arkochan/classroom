@@ -5,8 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:classroom"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        Height="450"
+        Width="500">
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="Create class">
+                <Grid Margin="250,40,250,40">
+                    <Border BorderBrush="Purple"
+                            BorderThickness="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel Margin="30">
+                                <TextBlock Text="Classname" />
+                                <TextBox Height="20"
+                                         Name="namebox" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <Button Content="Signup"
+                                        Height="20"
+                                        Width="50" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem >
+            <TabItem Header="Classes">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ListBox SelectionChanged="lb_SelectionChanged"
+                             Margin="10"
+                             Name="lb"
+                             Width="150"
+                             Height="300"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             SelectionMode="Single">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox Grid.Column="1"  Margin="10"
+                             Name="lb_students"
+                             Width="200"
+                             Height="300"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Top"
+                             SelectionMode="Single">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

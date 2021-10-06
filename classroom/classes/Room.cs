@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace classroom.classes
 {
-    class Room
+    public class Room
     {
         public List<User> teachers = new List<User>();
         public List<User> students = new List<User>();

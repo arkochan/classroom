@@ -17,16 +17,20 @@ namespace classroom.Views
     /// <summary>
     /// Interaction logic for NewUser.xaml
     /// </summary>
-    public partial class NewUser : Window
+    public partial class Login : Window
     {
-        public NewUser()
+        public Login()
         {
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var user1 = new classes.Student(namebox.Text, pwbox.Password, namebox.Text, namebox.Text); 
+            program.userid = namebox.Text;
+            this.Close();
+            var mw = new MainWindow();
+            mw.Show();
+
         }
     }
 }

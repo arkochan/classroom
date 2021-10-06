@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace classroom
 {
-    class program
+    public class program
     {
-       
+        public static string userid;
 
-
+        program()
+        {
+            var login_window = new Views.Login();
+            login_window.Show();
+            
+        }
     }
 }

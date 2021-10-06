@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
+
 namespace classroom
 {
     /// <summary>
@@ -23,10 +25,23 @@ namespace classroom
         public MainWindow()
         {
             InitializeComponent();
-            Views.NewUser w2 = new Views.NewUser();
-            w2.Show();
 
+            Views.Login w2 = new Views.Login();
+
+
+            List<string> items = new List<string>();
             
+            items.Add("hello");
+            items.Add("hi");
+            items.Add("arko");
+            lb.ItemsSource = items;
+
+
+        }
+
+        private void lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

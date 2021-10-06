@@ -133,6 +133,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\currentUser.cs" />
     <Compile Include="Firestore\Firestore.cs" />
     <Compile Include="program.cs" />
     <Compile Include="Views\Login.xaml.cs">
@@ -149,7 +150,6 @@
     <Compile Include="classes\Room.cs" />
     <Compile Include="ResultSystem\CourseResult.cs" />
     <Compile Include="ResultSystem\ExamResult.cs" />
-    <Compile Include="classes\Result.cs" />
     <Compile Include="classes\User.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -178,6 +178,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="classroomt.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
