@@ -10,8 +10,8 @@ namespace classroom.classes
 {
     public class currentUser : User
     {
-        List<Room> roomOTeacher = new List<Room>();
-        List<Room> roomOStudent = new List<Room>();
+        List<Room> roomTeacher = new List<Room>();
+        List<Room> roomStudent = new List<Room>();
 
 
     }

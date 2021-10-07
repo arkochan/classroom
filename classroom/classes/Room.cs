@@ -8,9 +8,11 @@ namespace classroom.classes
 {
     public class Room
     {
+
         public List<User> teachers = new List<User>();
         public List<User> students = new List<User>();
         public string department_name { get; set; }
+        public string Name { get; set; }
         public string course_id { get; set; }
         public string course_outline { get; set; }
         public float credit { get; set; }

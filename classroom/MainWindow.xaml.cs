@@ -30,11 +30,12 @@ namespace classroom
 
 
             List<string> items = new List<string>();
-            
+
             items.Add("hello");
             items.Add("hi");
             items.Add("arko");
-            lb.ItemsSource = items;
+            lb_students.ItemsSource = items;
+            Firestore.Firestore.Init("hello");
 
 
         }
@@ -43,5 +44,30 @@ namespace classroom
         {
 
         }
+
+        private void lb_students_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_remove(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_add(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Create_Class_Button_Click(object sender, RoutedEventArgs e)
+        {
+            classes.Room newroom = new classes.Room
+            {
+                Name = classnamebox.Text
+            };
+            Name = Firestore.Firestore.AddRoom(newroom);
+        }
     }
 }
+
