@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,12 @@ namespace classroom.Firestore
 {
     public static class Firestore
     {
+        public static EventHandler userexisnt;
         public static string rid { get; set; }
         public static FirestoreDb db;
         public static void Init(string roomcode)
         {
+            System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "I:\\Source\\Repos\\classroom\\classroom\\classroomt.json");
             db = FirestoreDb.Create("classroomt-f83c6");
         }
         //public static classes.Room GetRoom(string roomcode)
@@ -25,8 +28,18 @@ namespace classroom.Firestore
         {
             CollectionReference roomscoll = db.Collection("rooms");
             GetRoomId();
-            Dictionary<string, object> roomData = new Dictionary<string, object>()
+            ArrayList studentArray = new ArrayList();
+            ArrayList teacherArray = new ArrayList();
+            
+            
+            
+            foreach (classes.User u in room.students)
             {
+                studentArray.Add(u);
+            }
+            
+            Dictionary<string, object> roomData = new Dictionary<string, object>()
+            {   
                 { "course_id" , room.course_id },
                 { "Name" , room.Name },
                 { "roomid",room.id }
@@ -34,14 +47,26 @@ namespace classroom.Firestore
             };
             await roomscoll.Document(room.Name + room.id).SetAsync(roomData);
         }
+        public static async void AddStudentfs(string id)
+        {
+            DocumentReference userref = db.Collection("users").Document(id);
+            DocumentSnapshot snapshot = await userref.GetSnapshotAsync();
+            if (snapshot.Exists)
+            {
+
+            }
+
+            else
+            {
+                
+            }
+        }
         public static async void GetRoomId()
         {
             var ran = new Random();
             StringBuilder sb = new StringBuilder("    ");
             while (true)
             {
-                try
-                {
                     for (int i = 0; i < 4; i++)
                     {
                         sb[i] = (char)ran.Next('A', 'Z');
@@ -51,11 +76,6 @@ namespace classroom.Firestore
                     DocumentSnapshot snapshot = await roomRef.GetSnapshotAsync();
                     if (snapshot.Exists == false)
                         break;
-                }
-                catch
-                {
-
-                }
             }
 
         }
