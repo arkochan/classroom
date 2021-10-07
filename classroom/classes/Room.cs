@@ -13,6 +13,7 @@ namespace classroom.classes
         public List<User> students = new List<User>();
         public string department_name { get; set; }
         public string Name { get; set; }
+        public string id { get; set; }
         public string course_id { get; set; }
         public string course_outline { get; set; }
         public float credit { get; set; }

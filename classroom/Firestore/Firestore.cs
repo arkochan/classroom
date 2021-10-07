@@ -10,7 +10,7 @@ namespace classroom.Firestore
 {
     public static class Firestore
     {
-        public static string rid;
+        public static string rid { get; set; }
         public static FirestoreDb db;
         public static void Init(string roomcode)
         {
@@ -21,35 +21,46 @@ namespace classroom.Firestore
         //    DocumentReference roomdoc = db.Collection("rooms").Document(roomcode);
 
         //}
-        public static string AddRoom(classes.Room room)
+        public static async void AddRoom(classes.Room room)
         {
             CollectionReference roomscoll = db.Collection("rooms");
-            GetRoomId(room.Name);
-            Dictionary<string, object> docData = new Dictionary<string, object>()
+            GetRoomId();
+            Dictionary<string, object> roomData = new Dictionary<string, object>()
             {
                 { "course_id" , room.course_id },
-                { "Name" , room.Name }
+                { "Name" , room.Name },
+                { "roomid",room.id }
 
             };
-            return rid;
+            await roomscoll.Document(room.Name + room.id).SetAsync(roomData);
         }
-        public static async void GetRoomId(string name)
+        public static async void GetRoomId()
         {
-            string rid;
-            using (var sha = new System.Security.Cryptography.SHA256Managed())
-                while (true)
+            var ran = new Random();
+            StringBuilder sb = new StringBuilder("    ");
+            while (true)
+            {
+                try
                 {
+                    for (int i = 0; i < 4; i++)
                     {
-                        byte[] textData = System.Text.Encoding.UTF8.GetBytes(name);
-                        byte[] hash = sha.ComputeHash(textData);
-                        rid = BitConverter.ToString(hash).Replace("-", String.Empty);
+                        sb[i] = (char)ran.Next('A', 'Z');
                     }
+                    rid = sb.ToString();
                     DocumentReference roomRef = db.Collection("rooms").Document("rid");
                     DocumentSnapshot snapshot = await roomRef.GetSnapshotAsync();
                     if (snapshot.Exists == false)
                         break;
                 }
+                catch
+                {
+
+                }
+            }
 
         }
+
     }
 }
+
+

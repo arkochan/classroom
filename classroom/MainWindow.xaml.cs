@@ -66,7 +66,7 @@ namespace classroom
             {
                 Name = classnamebox.Text
             };
-            Name = Firestore.Firestore.AddRoom(newroom);
+            Firestore.Firestore.AddRoom(newroom);
         }
     }
 }
