@@ -1,29 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Cloud.Firestore;
 
 namespace classroom.classes
 {
+    [FirestoreData]
     public class User
     {
-
+        [FirestoreProperty]
         string department { get; set; }
+        [FirestoreProperty]
         public string email { get; set; }
+        [FirestoreProperty]
         public string password { get; set; }
+        [FirestoreProperty]
         public string phone { get; set; }
+        [FirestoreProperty]
         public string user_name { get; set; }
+        [FirestoreProperty]
         public string notification { get; set; }
+        [FirestoreProperty]
         public string messeges { get; set; }
         public int role { get; set; }
-        
-        public string uniqueID;
+        [FirestoreProperty]
 
-        public List<string> roomsTeacher = new List<string>();
-        public List<string> roomsStudent = new List<string>();
-        
-        
+        public string uniqueID { get; set; }
+        [FirestoreProperty]
+
+        public ArrayList roomsTeacher { get; set; }
+        [FirestoreProperty]
+        public ArrayList roomsStudent { get; set; }
+
+
 
         //public user(string _name, string _password, string _email, string _phone)
         //{

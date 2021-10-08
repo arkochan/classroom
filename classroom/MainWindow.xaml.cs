@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,27 +26,20 @@ namespace classroom
         public MainWindow()
         {
             InitializeComponent();
-
+            Firestore.Firestore.Init();
+            
             Views.Login w2 = new Views.Login();
-
-
-            List<string> items = new List<string>();
-
-            items.Add("hello");
-            items.Add("hi");
-            items.Add("arko");
-            lb_students.ItemsSource = items;
-            Firestore.Firestore.Init("hello");
-
-
+            lb_rooms.ItemsSource = program.CU.roomsStudent;
+  
         }
 
-        private void lb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+
+        private void lb_students_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
-        private void lb_students_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void lb_rooms_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
@@ -68,7 +62,7 @@ namespace classroom
             };
             Firestore.Firestore.AddRoom(newroom);
         }
-        
+
         
     }
 }

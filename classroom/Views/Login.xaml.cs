@@ -25,11 +25,12 @@ namespace classroom.Views
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            program.userid = namebox.Text;
-            this.Close();
+        {   
+            //auth 
+            program.CU.user_name = namebox.Text;
             var mw = new MainWindow();
             mw.Show();
+            this.Close();
 
         }
     }

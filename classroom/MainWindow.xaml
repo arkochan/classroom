@@ -11,7 +11,7 @@
     <Grid>
         <TabControl>
             <TabItem Header="Create class">
-                <Grid Margin="1" Height="300" Width="200">
+                <Grid Margin="1" Height="300" Width="250">
                     <Border BorderBrush="Purple"
                             BorderThickness="2">
                         <Grid>
@@ -30,7 +30,7 @@
                                 <Button Content="Create Class"
                                         Click="Create_Class_Button_Click"
                                         Height="20"
-                                        Width="50" />
+                                        Width="100" />
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -43,7 +43,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <ListBox SelectionChanged="lb_SelectionChanged"
+                    <ListBox SelectionChanged="lb_rooms_SelectionChanged"
                              Margin="10"
                              Name="lb_rooms"
                              Width="150"

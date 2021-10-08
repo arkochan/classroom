@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace classroom
 {
+
     public static class program
     {
+        public static classes.User CU;
         public static string userid;
 
         public static void Init()
@@ -17,6 +19,6 @@ namespace classroom
 
 
         }
-        
+
     }
 }
