@@ -16,7 +16,7 @@ namespace classroom.Firestore
         public static FirestoreDb db;
         public static void Init(string roomcode)
         {
-            System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "I:\\Source\\Repos\\classroom\\classroom\\classroomt.json");
+            System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "classroomt.json");
             db = FirestoreDb.Create("classroomt-f83c6");
         }
         //public static classes.Room GetRoom(string roomcode)
