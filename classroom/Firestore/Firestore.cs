@@ -14,7 +14,7 @@ namespace classroom.Firestore
         public static EventHandler userexisnt;
         public static string rid { get; set; }
         public static FirestoreDb db;
-        public static void Init(string roomcode)
+        public static void Init()
         {
             System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "classroomt.json");
             db = FirestoreDb.Create("classroomt-f83c6");
