@@ -12,26 +12,31 @@ namespace classroom.classes
     public class User
     {
         [FirestoreProperty]
-        string department { get; set; }
-        [FirestoreProperty]
+
         public string email { get; set; }
         [FirestoreProperty]
         public string password { get; set; }
-        [FirestoreProperty]
-        public string phone { get; set; }
+        //[FirestoreProperty]
+        //public string phone { get; set; }
         [FirestoreProperty]
         public string user_name { get; set; }
         [FirestoreProperty]
-        public string notification { get; set; }
-        [FirestoreProperty]
-        public string messeges { get; set; }
-        public int role { get; set; }
-        [FirestoreProperty]
+        public string tag { get; set; }
 
-        public string uniqueID { get; set; }
-        [FirestoreProperty]
+        //[FirestoreProperty]
+        //  public string notification { get; set; }
 
+        // [FirestoreProperty]
+        //  public string messeges { get; set; }
+
+        // [FirestoreProperty]
+        //   public int role { get; set; }
+
+
+
+        [FirestoreProperty]
         public ArrayList roomsTeacher { get; set; }
+
         [FirestoreProperty]
         public ArrayList roomsStudent { get; set; }
 

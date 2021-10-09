@@ -24,7 +24,7 @@ namespace classroom.Firestore
         //    DocumentReference roomdoc = db.Collection("rooms").Document(roomcode);
 
         //}
-        
+
         public static async Task<bool> AddStudentfs(classes.User user, string rid)
         {
             DocumentReference userref = db.Collection("users").Document(user.user_name);
@@ -38,7 +38,7 @@ namespace classroom.Firestore
                 return true;
 
             }
-                return false;
+            return false;
         }
         public static async Task<bool> CreateRoom(classes.Room room)
         {
@@ -55,13 +55,43 @@ namespace classroom.Firestore
                     sb[i] = (char)ran.Next('A', 'Z');
                 }
                 rid = room.Name + "#" + sb.ToString();
-                roomRef = db.Collection("rooms").Document("rid");
+                roomRef = db.Collection("rooms").Document(rid);
                 snapshot = await roomRef.GetSnapshotAsync();
                 if (snapshot.Exists == false)
                 {
                     room.id = sb.ToString();
                     await roomRef.SetAsync(room);
                     program.CU.roomsTeacher.Add(room);
+                    //update(Program.CU)
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static async Task<bool> CreateUserfs(classes.User user)
+        {
+
+            Random ran = new Random();
+            StringBuilder sb = new StringBuilder("    ");
+            int count = 0;
+            string sid="a";
+
+            DocumentReference roomRef = db.Collection("rooms").Document(sid);
+            DocumentSnapshot snapshot = await roomRef.GetSnapshotAsync();
+
+            while (count++ < 100) //to make risk free 
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    sb[i] = (char)ran.Next('A', 'Z');
+                }
+                sid = user.user_name + "#" + sb.ToString();
+
+                if (snapshot.Exists == false)
+                {
+                    user.tag = sb.ToString();
+                    await roomRef.SetAsync(user);
+                    program.CU.roomsTeacher.Add(user);
                     //update(Program.CU)
                     return true;
                 }
@@ -97,7 +127,7 @@ namespace classroom.Firestore
         }
         public static async void Signup(string id, string pass)
         {   //adds user to db
-           
+
         }
     }
 }
