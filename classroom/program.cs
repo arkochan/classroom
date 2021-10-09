@@ -9,15 +9,17 @@ namespace classroom
 
     public static class program
     {
-        public static classes.User CU;
+        public static classes.currentUser CU;
         public static string userid;
 
         public static void Init()
         {
             Views.Login login_window = new Views.Login();
             login_window.Show();
-
-
+            CU = new classes.currentUser
+            {
+                user_name = userid
+            };
         }
 
     }
