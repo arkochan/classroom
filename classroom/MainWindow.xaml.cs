@@ -29,7 +29,7 @@ namespace classroom
             Firestore.Firestore.Init();
             
             Views.Login w2 = new Views.Login();
-            //lb_rooms.ItemsSource = program.CU.roomsStudent;
+            lb_rooms.ItemsSource = program.CU.roomsStudent;
   
         }
 
@@ -58,12 +58,16 @@ namespace classroom
         {
             classes.Room newroom = new classes.Room
             {
-                Name = classnamebox.Text
+                Name = classnamebox.Text,
+                
             };
-            Firestore.Firestore.AddRoom(newroom);
+            //Firestore.Firestore.AddRoom(newroom);
         }
 
-        
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 
