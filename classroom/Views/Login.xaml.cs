@@ -27,7 +27,7 @@ namespace classroom.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {   
             //auth 
-            program.userid = namebox.Text;
+            program.CU.user_name = namebox.Text;
             var mw = new MainWindow();
             mw.Show();
             this.Close();

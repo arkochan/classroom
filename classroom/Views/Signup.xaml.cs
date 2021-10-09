@@ -22,6 +22,7 @@ namespace classroom.Views
         public Signup()
         {
             InitializeComponent();
+            program.Init();
         }
 
         //public event EventHandler PasswordsDontMatch;
