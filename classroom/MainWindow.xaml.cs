@@ -58,9 +58,10 @@ namespace classroom
         {
             classes.Room newroom = new classes.Room
             {
-                Name = classnamebox.Text
+                Name = classnamebox.Text,
+                
             };
-            Firestore.Firestore.AddRoom(newroom);
+            //Firestore.Firestore.AddRoom(newroom);
         }
 
         

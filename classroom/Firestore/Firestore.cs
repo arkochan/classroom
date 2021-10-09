@@ -12,7 +12,7 @@ namespace classroom.Firestore
     public static class Firestore
     {
         public static EventHandler userexisnt;
-        public static string rid { get; set; }
+
         public static FirestoreDb db;
         public static void Init()
         {
@@ -24,62 +24,81 @@ namespace classroom.Firestore
         //    DocumentReference roomdoc = db.Collection("rooms").Document(roomcode);
 
         //}
-        public static async void AddRoom(classes.Room room)
+        
+        public static async Task<bool> AddStudentfs(classes.User user, string rid)
         {
-            CollectionReference roomscoll = db.Collection("rooms");
-            GetRoomId();
-            ArrayList studentArray = new ArrayList();
-            ArrayList teacherArray = new ArrayList();
-            
-            
-            
-            foreach (classes.User u in room.students)
+            DocumentReference userref = db.Collection("users").Document(user.user_name);
+            DocumentSnapshot snapshot = await userref.GetSnapshotAsync();
+            if (snapshot.Exists) //user exist
             {
-                studentArray.Add(u);
-            }
-            
-            Dictionary<string, object> roomData = new Dictionary<string, object>()
-            {   
-                { "course_id" , room.course_id },
-                { "Name" , room.Name },
-                { "roomid",room.id }
+                DocumentReference roomref = db.Collection("rooms").Document(rid);
+                DocumentSnapshot roomsnapshot = await userref.GetSnapshotAsync();
+                classes.Room temp = roomsnapshot.ConvertTo<classes.Room>();
+                temp.students.Add(user);
+                return true;
 
-            };
-            await roomscoll.Document(room.Name + room.id).SetAsync(roomData);
+            }
+                return false;
         }
-        public static async void AddStudentfs(string id)
+        public static async Task<bool> CreateRoom(classes.Room room)
+        {
+            Random ran = new Random();
+            StringBuilder sb = new StringBuilder("    ");
+            int count = 0;
+            string rid;
+            DocumentReference roomRef = db.Collection("rooms").Document("rid");
+            DocumentSnapshot snapshot;
+            while (count++ < 100) //to make risk free 
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    sb[i] = (char)ran.Next('A', 'Z');
+                }
+                rid = room.Name + "#" + sb.ToString();
+                roomRef = db.Collection("rooms").Document("rid");
+                snapshot = await roomRef.GetSnapshotAsync();
+                if (snapshot.Exists == false)
+                {
+                    room.id = sb.ToString();
+                    await roomRef.SetAsync(room);
+                    program.CU.roomsTeacher.Add(room);
+                    //update(Program.CU)
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static async Task<classes.User> GetUserAsync(string id)
         {
             DocumentReference userref = db.Collection("users").Document(id);
             DocumentSnapshot snapshot = await userref.GetSnapshotAsync();
             if (snapshot.Exists)
             {
-
+                return snapshot.ConvertTo<classes.User>();
             }
-
             else
             {
-                
+                return null;
             }
         }
-        public static async void GetRoomId()
-        {
-            var ran = new Random();
-            StringBuilder sb = new StringBuilder("    ");
-            while (true)
+        public static async Task<classes.User> AuthUser(string id, string pass)
+        {   //easy authentication and returns current user if exists
+            DocumentReference userref = db.Collection("users").Document(id);
+            DocumentSnapshot snapshot = await userref.GetSnapshotAsync();
+            if (snapshot.Exists)
             {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        sb[i] = (char)ran.Next('A', 'Z');
-                    }
-                    rid = sb.ToString();
-                    DocumentReference roomRef = db.Collection("rooms").Document("rid");
-                    DocumentSnapshot snapshot = await roomRef.GetSnapshotAsync();
-                    if (snapshot.Exists == false)
-                        break;
+                Dictionary<string, object> userdoc = snapshot.ToDictionary();
+                if ((string)userdoc["password"] == pass)
+                {
+                    return snapshot.ConvertTo<classes.User>();
+                }
             }
-
+            return null;
         }
-
+        public static async void Signup(string id, string pass)
+        {   //adds user to db
+           
+        }
     }
 }
 
