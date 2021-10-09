@@ -9,7 +9,7 @@ using Google.Cloud.Firestore;
 namespace classroom.classes
 {
     [FirestoreData]
-    public class User
+    public partial class User
     {
         [FirestoreProperty]
 
@@ -35,10 +35,10 @@ namespace classroom.classes
 
 
         [FirestoreProperty]
-        public ArrayList roomsTeacher { get; set; }
+        public ArrayList RoomsTeacher { get; set; }
 
         [FirestoreProperty]
-        public ArrayList roomsStudent { get; set; }
+        public ArrayList RoomsStudent { get; set; }
 
 
 

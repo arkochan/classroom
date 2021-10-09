@@ -29,7 +29,7 @@ namespace classroom
             Firestore.Firestore.Init();
             
             Views.Login w2 = new Views.Login();
-            lb_rooms.ItemsSource = program.CU.roomsStudent;
+            lb_rooms.ItemsSource = program.CU.RoomsStudent;
   
         }
 
