@@ -64,7 +64,10 @@ namespace classroom
             //Firestore.Firestore.AddRoom(newroom);
         }
 
-        
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 
