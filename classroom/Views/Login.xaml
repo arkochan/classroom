@@ -24,7 +24,7 @@
         <StackPanel Grid.Row="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-            <Button Content="Signup"
+            <Button Content="Login"
                     Height="20"
                     Width="50"
                     Click="Button_Click" />
