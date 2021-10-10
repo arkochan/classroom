@@ -76,10 +76,14 @@ namespace classroom.Firestore
             while (count++ < 100) //to make risk free 
             {
                 tag = GetRandomString();
-                sid = user.user_name + "#" + tag;
+                sid = user.user_name;
                 roomRef = db.Collection("users").Document(sid);
                 snapshot = await roomRef.GetSnapshotAsync();
-                if (snapshot.Exists == false)
+                if (snapshot.Exists)
+                {
+                    return false;
+                }
+                else
                 {
                     user.tag = tag;
                     await roomRef.SetAsync(user);
