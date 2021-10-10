@@ -68,16 +68,14 @@ namespace classroom.Firestore
         {
             Init();
             int count = 0;
-            string sid, tag;
+
 
             DocumentReference roomRef;
             DocumentSnapshot snapshot;
 
             while (count++ < 100) //to make risk free 
             {
-                tag = GetRandomString();
-                sid = user.user_name;
-                roomRef = db.Collection("users").Document(sid);
+                roomRef = db.Collection("users").Document(user.user_name);
                 snapshot = await roomRef.GetSnapshotAsync();
                 if (snapshot.Exists)
                 {
@@ -85,7 +83,7 @@ namespace classroom.Firestore
                 }
                 else
                 {
-                    user.tag = tag;
+
                     await roomRef.SetAsync(user);
                     //program.CU.RoomsTeacher.Add(user) ;
                     //update(Program.CU)
@@ -94,6 +92,7 @@ namespace classroom.Firestore
             }
             return false;
         }
+
         public static async Task<classes.User> GetUserAsync(string id)
         {
             DocumentReference userref = db.Collection("users").Document(id);
