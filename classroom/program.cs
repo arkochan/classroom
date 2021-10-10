@@ -12,17 +12,14 @@ namespace classroom
 
     public static class program
     {
-        public static classes.User CU;
+        public static User CU = new User();
+        public static int a;
 
-        public static void Init()
+        static program()
         {
             Firestore.Firestore.Init();
-            CU = new User();
-            program.CU.RoomsTeacher = new ArrayList();
-            program.CU.RoomsStudent = new ArrayList();
-            program.CU.RoomsStudent.Add('x');
-           
         }
+
 
         public static bool UserSignup(string _username, string _password/*Argument*/)
         {
@@ -44,12 +41,13 @@ namespace classroom
 
         }
 
+
         public static bool UserLogin(/*Argument*/string userid, string password)
         {
             //auth
-          
+
             var result = Task.Run(async () => await Firestore.Firestore.AuthUser(userid, password)).Result;
-            
+
 
             if (Firestore.Firestore.flag)
             {
@@ -66,16 +64,24 @@ namespace classroom
         public static void CreateRoom(string nameofroom/*Argument*/)
         {
 
+
             //create its object
             Room newRoom = new Room
             {
                 Name = nameofroom
             };
+            if (newRoom.teachers == null)
+            {
+                newRoom.teachers = new ArrayList();
+            }
+
+            newRoom.teachers.Add(CU);
             //add it to view
             //add it to firestore
             Firestore.Firestore.CreateRoom(newRoom);
             //add it to CU array
-            program.CU.RoomsTeacher.Add(newRoom);
+
+            CU.addRoom(newRoom);
             //cache 
         }
         public static void Addstudent(/*Argument*/)

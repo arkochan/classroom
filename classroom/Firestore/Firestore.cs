@@ -60,10 +60,6 @@ namespace classroom.Firestore
                 {
                     room.id = tag;
                     await roomRef.SetAsync(room);
-                    //update(Program.CU)
-                    program.CU.RoomsTeacher.Add('x');
-
-
                     return true;
                 }
             }

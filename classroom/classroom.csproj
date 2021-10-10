@@ -133,7 +133,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="classes\currentUser.cs" />
     <Compile Include="Firestore\Firestore.cs" />
     <Compile Include="program.cs" />
     <Compile Include="Views\Login.xaml.cs">

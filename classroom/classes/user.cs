@@ -11,8 +11,13 @@ namespace classroom.classes
     [FirestoreData]
     public partial class User
     {
-        [FirestoreProperty]
+        public User()
+        {
+            RoomsTeacher = new ArrayList();
+            RoomsStudent = new ArrayList();
+        }
 
+        [FirestoreProperty]
         public string email { get; set; }
         [FirestoreProperty]
         public string password { get; set; }
@@ -55,6 +60,15 @@ namespace classroom.classes
         public bool sendMessages(string msg)
         {
             return true;
+        }
+        public void addRoom(classes.Room room)
+        {
+            if (RoomsTeacher == null)
+            {
+                RoomsTeacher = new ArrayList();
+                Console.WriteLine("What the fuck is happening");
+            }
+            RoomsTeacher.Add(room);
         }
         public void generateUniqueID()
         {
