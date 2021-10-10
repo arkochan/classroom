@@ -56,13 +56,19 @@ namespace classroom
 
             //set current user 
         }
-        public static void CreateRoom(/*Argument*/)
+        public static void CreateRoom(string nameofroom/*Argument*/)
         {
 
             //create its object
+            Room newRoom = new Room
+            {
+                Name = nameofroom
+            };
             //add it to view
             //add it to firestore
+            Firestore.Firestore.CreateRoom(newRoom);
             //add it to CU array
+            program.CU.RoomsTeacher.Add(newRoom);
             //cache 
         }
         public static void Addstudent(/*Argument*/)
