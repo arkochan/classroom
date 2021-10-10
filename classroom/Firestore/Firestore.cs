@@ -94,6 +94,36 @@ namespace classroom.Firestore
             }
             return false;
         }
+        public static async Task<bool> CreateUserfs(classes.User user)
+        {
+
+            Random ran = new Random();
+            StringBuilder sb = new StringBuilder("    ");
+            int count = 0;
+            string sid="a";
+
+            DocumentReference roomRef = db.Collection("rooms").Document(sid);
+            DocumentSnapshot snapshot = await roomRef.GetSnapshotAsync();
+
+            while (count++ < 100) //to make risk free 
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    sb[i] = (char)ran.Next('A', 'Z');
+                }
+                sid = user.user_name + "#" + sb.ToString();
+
+                if (snapshot.Exists == false)
+                {
+                    user.tag = sb.ToString();
+                    await roomRef.SetAsync(user);
+                    program.CU.roomsTeacher.Add(user);
+                    //update(Program.CU)
+                    return true;
+                }
+            }
+            return false;
+        }
         public static async Task<classes.User> GetUserAsync(string id)
         {
             DocumentReference userref = db.Collection("users").Document(id);
