@@ -11,6 +11,9 @@ namespace classroom.Firestore
 {
     public static class Firestore
     {
+        public static bool flag { get; set; }
+        public static classes.User tempuser { get; set; }
+
         public static EventHandler userexisnt;
 
         public static FirestoreDb db;
@@ -106,7 +109,7 @@ namespace classroom.Firestore
                 return null;
             }
         }
-        public static async Task<classes.User> AuthUser(string id, string pass)
+        public static async void AuthUser(string id, string pass)
         {   //easy authentication and returns current user if exists
             DocumentReference userref = db.Collection("users").Document(id);
             DocumentSnapshot snapshot = await userref.GetSnapshotAsync();
@@ -115,10 +118,20 @@ namespace classroom.Firestore
                 Dictionary<string, object> userdoc = snapshot.ToDictionary();
                 if ((string)userdoc["password"] == pass)
                 {
-                    return snapshot.ConvertTo<classes.User>();
+                    flag = true;
+
+                    tempuser = snapshot.ConvertTo<classes.User>();
+                }
+                else
+                {
+                    flag = false;
                 }
             }
-            return null;
+            else
+            {
+                flag = false;
+            }
+            return;
         }
         public static async void Signup(string id, string pass)
         {   //adds user to db

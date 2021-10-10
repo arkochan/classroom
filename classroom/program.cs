@@ -45,6 +45,15 @@ namespace classroom
         public static void UserLogin(/*Argument*/string userid, string password)
         {
             //auth
+            
+            Firestore.Firestore.AuthUser(userid, password);
+            if (Firestore.Firestore.flag)
+            {
+                program.CU = Firestore.Firestore.tempuser;
+
+            } 
+
+
             //set current user 
         }
         public static void CreateRoom(/*Argument*/)
