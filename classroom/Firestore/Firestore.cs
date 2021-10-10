@@ -60,8 +60,10 @@ namespace classroom.Firestore
                 {
                     room.id = tag;
                     await roomRef.SetAsync(room);
-                    program.CU.RoomsTeacher.Add(room);
                     //update(Program.CU)
+                    program.CU.RoomsTeacher.Add('x');
+
+
                     return true;
                 }
             }
@@ -69,31 +71,21 @@ namespace classroom.Firestore
         }
         public static async Task<bool> CreateUserfs(classes.User user)
         {
-            Init();
-            int count = 0;
-
-
             DocumentReference roomRef;
             DocumentSnapshot snapshot;
-
-            while (count++ < 100) //to make risk free 
+            roomRef = db.Collection("users").Document(user.user_name);
+            snapshot = await roomRef.GetSnapshotAsync();
+            if (snapshot.Exists)
             {
-                roomRef = db.Collection("users").Document(user.user_name);
-                snapshot = await roomRef.GetSnapshotAsync();
-                if (snapshot.Exists)
-                {
-                    return false;
-                }
-                else
-                {
-
-                    await roomRef.SetAsync(user);
-                    //program.CU.RoomsTeacher.Add(user) ;
-                    //update(Program.CU)
-                    return true;
-                }
+                return false;
             }
-            return false;
+            else
+            {
+                await roomRef.SetAsync(user);
+                //program.CU.RoomsTeacher.Add(user) ;
+                //update(Program.CU)
+                return true;
+            }
         }
 
         public static async Task<classes.User> GetUserAsync(string id)
@@ -109,7 +101,7 @@ namespace classroom.Firestore
                 return null;
             }
         }
-        public static async void AuthUser(string id, string pass)
+        public static async Task<bool> AuthUser(string id, string pass)
         {   //easy authentication and returns current user if exists
             DocumentReference userref = db.Collection("users").Document(id);
             DocumentSnapshot snapshot = await userref.GetSnapshotAsync();
@@ -131,7 +123,7 @@ namespace classroom.Firestore
             {
                 flag = false;
             }
-            return;
+            return flag;
         }
         public static async void Signup(string id, string pass)
         {   //adds user to db

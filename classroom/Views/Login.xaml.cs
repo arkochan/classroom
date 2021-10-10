@@ -25,12 +25,20 @@ namespace classroom.Views
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {   
+        {
             //auth 
-            program.CU.user_name = namebox.Text;
-            var mw = new MainWindow();
-            mw.Show();
-            this.Close();
+            if (program.UserLogin(namebox.Text, pwbox.Password.ToString()))
+            {
+                program.CU.user_name = namebox.Text;
+                var mw = new MainWindow();
+                mw.Show();
+                this.Close();
+
+            }
+            else
+            {
+                MessageBox.Show("Wrong username of password");
+            }
 
         }
     }

@@ -61,7 +61,7 @@ namespace classroom
                 Name = classnamebox.Text,
                 
             };
-            //Firestore.Firestore.AddRoom(newroom);
+            Firestore.Firestore.CreateRoom(newroom);
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
