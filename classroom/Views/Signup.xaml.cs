@@ -31,7 +31,7 @@ namespace classroom.Views
         private void SigupClick(object sender, RoutedEventArgs e)
         {
             bool flg = program.UserSignup(namebox.Text, pwbox.Password.ToString()); ;
-
+                 
             if (flg)
             {
                 Views.Login lw = new Login();
