@@ -59,7 +59,6 @@ namespace classroom.Firestore
                 if (snapshot.Exists == false)
                 {
                     room.tag = tag;
-                    
                     await roomRef.SetAsync(room);
                     return true;
                 }

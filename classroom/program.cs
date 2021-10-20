@@ -13,14 +13,15 @@ namespace classroom
     public static class program
     {
         public static User CU;
-       
+        public static event EventHandler<string> status;
+
         static program()
         {
             Firestore.Firestore.Init();
             CU = new User
             {
-                RoomsStudent = new ArrayList(),
-                RoomsTeacher = new ArrayList()
+                RoomsStudentRef = new ArrayList(),
+                RoomsTeacherRef = new ArrayList()
             };
         }
 
@@ -56,11 +57,16 @@ namespace classroom
             if (Firestore.Firestore.flag)
             {
                 program.CU = Firestore.Firestore.tempuser;
-                if (program.CU.RoomsTeacher == null) program.CU.RoomsTeacher = new ArrayList();
-                if (program.CU.RoomsStudent == null) program.CU.RoomsStudent = new ArrayList();
-                if (program.CU.RoomsTeacherRef == null) program.CU.RoomsTeacherRef = new ArrayList();
+                if (User.RoomsTeacher == null) User.RoomsTeacher = new ArrayList();
+                if (User.RoomsStudent == null) User.RoomsStudent = new ArrayList();
+                if (program.CU.RoomsTeacherRef == null)
+                {
+                    program.CU.RoomsTeacherRef = new ArrayList();
+                    status?.Invoke(CU, "program.CU.RoomsTeacherRef was null");
+                }
                 if (program.CU.RoomsStudentRef == null) program.CU.RoomsStudentRef = new ArrayList();
                 if (classes.User.Allrooms == null) classes.User.Allrooms = new ArrayList();
+
                 return true;
             }
             else
@@ -88,7 +94,7 @@ namespace classroom
             //add it to firestore
             await Firestore.Firestore.CreateRoom(newRoom);
             Firestore.Firestore.updateUser(CU.user_name);
-            CU.RoomsTeacher.Add(newRoom);
+            classes.User.RoomsTeacher.Add(newRoom);
             CU.RoomsTeacherRef.Add(newRoom.Name + "#" + newRoom.tag);
             classes.User.Allrooms.Add(newRoom.Name);
             //add it to CU array
@@ -108,7 +114,7 @@ namespace classroom
             //add it to current room's array
             //update current Room
         }
-        
+
 
 
     }

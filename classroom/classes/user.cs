@@ -17,39 +17,23 @@ namespace classroom.classes
             RoomsTeacher = new ArrayList();
             RoomsStudent = new ArrayList();
         }
-
         [FirestoreProperty]
         public string email { get; set; }
         [FirestoreProperty]
         public string password { get; set; }
-        //[FirestoreProperty]
-        //public string phone { get; set; }
         [FirestoreProperty]
-        public string user_name { get; set; }
-        [FirestoreProperty]
-        public string tag { get; set; }
-
-        //[FirestoreProperty]
-        //  public string notification { get; set; }
-
-        // [FirestoreProperty]
-        //  public string messeges { get; set; }
-
-        // [FirestoreProperty]
-        //   public int role { get; set; }
+        public string user_name { get; set; }  
+        public static ArrayList RoomsTeacher { get; set; }
+        public static ArrayList RoomsStudent { get; set; }
 
 
 
-        
-        public ArrayList RoomsTeacher { get; set; }
+
+
         [FirestoreProperty]
         public ArrayList RoomsTeacherRef { get; set; }
         [FirestoreProperty]
         public ArrayList RoomsStudentRef { get; set; }
-
-        public ArrayList RoomsStudent { get; set; }
-
-
 
         //public user(string _name, string _password, string _email, string _phone)
         //{
