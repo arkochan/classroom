@@ -20,7 +20,7 @@ namespace classroom.classes
         [FirestoreProperty]
         public string Name { get; set; }
         [FirestoreProperty]
-        public string id { get; set; }
+        public string tag { get; set; }
         [FirestoreProperty]
         public string course_id { get; set; }
         [FirestoreProperty]

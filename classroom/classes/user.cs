@@ -11,6 +11,7 @@ namespace classroom.classes
     [FirestoreData]
     public partial class User
     {
+        public static ArrayList Allrooms;
         public User()
         {
             RoomsTeacher = new ArrayList();
@@ -39,10 +40,13 @@ namespace classroom.classes
 
 
 
-        [FirestoreProperty]
+        
         public ArrayList RoomsTeacher { get; set; }
-
         [FirestoreProperty]
+        public ArrayList RoomsTeacherRef { get; set; }
+        [FirestoreProperty]
+        public ArrayList RoomsStudentRef { get; set; }
+
         public ArrayList RoomsStudent { get; set; }
 
 
@@ -63,11 +67,7 @@ namespace classroom.classes
         }
         public void addRoom(classes.Room room)
         {
-            if (RoomsTeacher == null)
-            {
-                RoomsTeacher = new ArrayList();
-                Console.WriteLine("What the fuck is happening");
-            }
+            
             RoomsTeacher.Add(room);
         }
         public void generateUniqueID()

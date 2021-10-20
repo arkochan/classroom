@@ -12,12 +12,16 @@ namespace classroom
 
     public static class program
     {
-        public static User CU = new User();
-        public static int a;
-
+        public static User CU;
+       
         static program()
         {
             Firestore.Firestore.Init();
+            CU = new User
+            {
+                RoomsStudent = new ArrayList(),
+                RoomsTeacher = new ArrayList()
+            };
         }
 
 
@@ -52,6 +56,11 @@ namespace classroom
             if (Firestore.Firestore.flag)
             {
                 program.CU = Firestore.Firestore.tempuser;
+                if (program.CU.RoomsTeacher == null) program.CU.RoomsTeacher = new ArrayList();
+                if (program.CU.RoomsStudent == null) program.CU.RoomsStudent = new ArrayList();
+                if (program.CU.RoomsTeacherRef == null) program.CU.RoomsTeacherRef = new ArrayList();
+                if (program.CU.RoomsStudentRef == null) program.CU.RoomsStudentRef = new ArrayList();
+                if (classes.User.Allrooms == null) classes.User.Allrooms = new ArrayList();
                 return true;
             }
             else
@@ -61,27 +70,29 @@ namespace classroom
 
             //set current user 
         }
-        public static void CreateRoom(string nameofroom/*Argument*/)
+        public async static Task<Room> CreateRoom(string nameofroom/*Argument*/)
         {
 
 
             //create its object
             Room newRoom = new Room
             {
-                Name = nameofroom
-            };
-            if (newRoom.teachers == null)
-            {
-                newRoom.teachers = new ArrayList();
-            }
+                Name = nameofroom,
+                teachers = new ArrayList(),
+                students = new ArrayList()
 
-            newRoom.teachers.Add(CU);
+            };
+
+            newRoom.teachers.Add(CU.user_name);
             //add it to view
             //add it to firestore
-            Firestore.Firestore.CreateRoom(newRoom);
+            await Firestore.Firestore.CreateRoom(newRoom);
+            Firestore.Firestore.updateUser(CU.user_name);
+            CU.RoomsTeacher.Add(newRoom);
+            CU.RoomsTeacherRef.Add(newRoom.Name + "#" + newRoom.tag);
+            classes.User.Allrooms.Add(newRoom.Name);
             //add it to CU array
-
-            CU.addRoom(newRoom);
+            return newRoom;
             //cache 
         }
         public static void Addstudent(/*Argument*/)
@@ -97,8 +108,7 @@ namespace classroom
             //add it to current room's array
             //update current Room
         }
-
-
+        
 
 
     }

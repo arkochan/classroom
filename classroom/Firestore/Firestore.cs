@@ -58,7 +58,8 @@ namespace classroom.Firestore
                 snapshot = await roomRef.GetSnapshotAsync();
                 if (snapshot.Exists == false)
                 {
-                    room.id = tag;
+                    room.tag = tag;
+                    
                     await roomRef.SetAsync(room);
                     return true;
                 }
@@ -83,7 +84,14 @@ namespace classroom.Firestore
                 return true;
             }
         }
-
+        public static async Task updateUser(string username)
+        {
+            DocumentReference roomRef;
+            DocumentSnapshot snapshot;
+            roomRef = db.Collection("users").Document(username);
+            snapshot = await roomRef.GetSnapshotAsync();
+            await roomRef.SetAsync(program.CU);
+        }
         public static async Task<classes.User> GetUserAsync(string id)
         {
             DocumentReference userref = db.Collection("users").Document(id);

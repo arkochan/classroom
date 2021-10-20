@@ -29,7 +29,8 @@ namespace classroom
             Firestore.Firestore.Init();
 
             Views.Login w2 = new Views.Login();
-            
+            lb_rooms.ItemsSource = classes.User.Allrooms;
+
 
         }
 
@@ -54,12 +55,12 @@ namespace classroom
 
         }
 
-        private void Create_Class_Button_Click(object sender, RoutedEventArgs e)
+        private async void Create_Class_Button_Click(object sender, RoutedEventArgs e)
         {
 
-            program.CreateRoom(classnamebox.Text);
-            lb_rooms.Items.Add(classnamebox.Text);
-
+            var tsk = program.CreateRoom(classnamebox.Text);
+            var x = await tsk;
+            lb_rooms.Items.Refresh();
 
         }
 
