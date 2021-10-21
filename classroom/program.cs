@@ -175,13 +175,14 @@ namespace classroom
             {
 
                 User.RoomsTeacher[roomid] = await getroomTask;
+                status?.Invoke(null, $"{roomid} loaded");
             }
        
             Room room = User.RoomsTeacher[roomid];
 
            // newpost.author = CU.user_name;
             room.Postsref.Add(newpost.id);
-            Firestore.Firestore.CreatePost(newpost);
+            await Firestore.Firestore.CreatePost(newpost);
 
 
 

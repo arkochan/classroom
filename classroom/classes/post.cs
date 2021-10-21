@@ -4,19 +4,25 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Google.Cloud.Firestore;
 namespace classroom.classes
 {
     public class Post
     {
+        [FirestoreProperty]
         public string id { get; set; }
+        [FirestoreProperty]
         public string content { get; set; }
+        [FirestoreProperty]
         public string author { get; set; }
+        [FirestoreProperty]
 
         public DateTime creationDate { get; set; }
+        [FirestoreProperty]
         public string roomid { get; set; }
-
+        [FirestoreProperty]
         public ArrayList comments { get; set; }
+        [FirestoreProperty]
         public ArrayList reactors { get; set; }
         public Post(string content_)
         {

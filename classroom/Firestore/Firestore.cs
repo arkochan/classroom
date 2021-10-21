@@ -118,6 +118,7 @@ namespace classroom.Firestore
                 {
                     //room.tag = tag;
                     await postRef.SetAsync(post);
+                
                     return true;
                 }
             }

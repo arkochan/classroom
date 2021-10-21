@@ -55,6 +55,8 @@ namespace classroom
             lb_students.Items.Refresh();
 
             addStudentButton.IsEnabled = program.CU.IsTeacher(lb_rooms.SelectedItem.ToString());
+            lb_posts.ItemsSource = classes.User.RoomsTeacher[lb_rooms.SelectedItem.ToString()].Postsref;
+            lb_posts.Items.Refresh();
         }
 
 
