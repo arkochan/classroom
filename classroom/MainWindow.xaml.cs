@@ -32,7 +32,8 @@ namespace classroom
             lb_rooms.ItemsSource = classes.User.Allrooms;
             cutb.Text = "Current User: " + program.CU.user_name;
             program.status += Program_status;
-            ClassSelectorCB.ItemsSource=program.CU.RoomsTeacherRef;
+            Firestore.Firestore.status += Program_status;
+            ClassSelectorCB.ItemsSource = program.CU.RoomsTeacherRef;
 
         }
 

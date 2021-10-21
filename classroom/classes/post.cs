@@ -17,7 +17,7 @@ namespace classroom.classes
         public string author { get; set; }
         [FirestoreProperty]
 
-        public DateTime creationDate { get; set; }
+        public string creationDate { get; set; }
         [FirestoreProperty]
         public string roomid { get; set; }
         [FirestoreProperty]
@@ -27,8 +27,9 @@ namespace classroom.classes
         public Post(string content_)
         {
             content = content_;
-            creationDate = System.DateTime.Now;
+            creationDate = System.DateTime.Now.ToString();
             id = Firestore.Firestore.GetRandomString(8);
+            
 
         }
         public int ReactCount()

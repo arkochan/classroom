@@ -15,6 +15,7 @@ namespace classroom.Firestore
         public static classes.User tempuser { get; set; }
 
         public static EventHandler userexisnt;
+        public static EventHandler<string> status;
 
         public static FirestoreDb db;
         public static void Init()
@@ -106,7 +107,7 @@ namespace classroom.Firestore
 
             int count = 0;
             string pid;
-            DocumentReference postRef = db.Collection("posts").Document("pid");
+            DocumentReference postRef;
             DocumentSnapshot snapshot;
             while (count++ < 100) //to make risk free 
             {
@@ -114,12 +115,26 @@ namespace classroom.Firestore
                 pid = post.id;
                 postRef = db.Collection("posts").Document(pid);
                 snapshot = await postRef.GetSnapshotAsync();
+
+
                 if (snapshot.Exists == false)
                 {
                     //room.tag = tag;
-                    await postRef.SetAsync(post);
-                
+                    await postRef.SetAsync(new Dictionary<string, object>
+                    {
+                        {"id",post.id },
+                        {"content",post.content },
+                        {"author",post.author },
+                        {"creationDate", post.creationDate },
+                        {"roomid",post.roomid },
+                        {"comments",post.comments },
+                        {"reactors",post.reactors }});
+
                     return true;
+                }
+                else
+                {
+                    pid = post.id = GetRandomString(8);
                 }
             }
             return false;
@@ -161,16 +176,16 @@ namespace classroom.Firestore
             }
             return flag;
         }
-       // public static async  Signup(string id, string pass)
-       // {   //adds user to db
+        // public static async  Signup(string id, string pass)
+        // {   //adds user to db
 
-       // }
+        // }
         public static async Task<bool> FindUser(string username)
         {
-            
-            
+
+
             return (await db.Collection("users").Document(username).GetSnapshotAsync()).Exists;
-           
+
         }
         public static string GetRandomString(int stringLength = 4)
         {

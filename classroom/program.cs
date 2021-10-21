@@ -140,7 +140,7 @@ namespace classroom
         }
 
         public static async Task Addstudent(string roomRef, string studentUserId)
-            //this should be invitation based 
+        //this should be invitation based 
         {
             var task = Firestore.Firestore.FindUser(studentUserId);
 
@@ -155,7 +155,7 @@ namespace classroom
             }
             //search for the user id
 
-            if(!await task)
+            if (!await task)
             {
                 status?.Invoke(null, $"User {studentUserId} Doesn\'t Exist");
                 return;//tryctach
@@ -169,18 +169,21 @@ namespace classroom
         }
         public async static Task CreatePost(string roomid, string content_)
         {
-            var getroomTask= Firestore.Firestore.GetRoomAsync(roomid);
-            Post newpost = new Post(content_);
-            if(!User.RoomsTeacher.ContainsKey(roomid))
+            var getroomTask = Firestore.Firestore.GetRoomAsync(roomid);
+            Post newpost = new Post(content_)
+            {
+                roomid=roomid
+            };
+            if (!User.RoomsTeacher.ContainsKey(roomid))
             {
 
-                User.RoomsTeacher[roomid] = await getroomTask;
-                status?.Invoke(null, $"{roomid} loaded");
+                User.RoomsTeacher.Add(roomid, await getroomTask);
             }
-       
-            Room room = User.RoomsTeacher[roomid];
 
-           // newpost.author = CU.user_name;
+            Room room = User.RoomsTeacher[roomid];
+            status?.Invoke(null, $"{room.Name} loaded");
+
+            // newpost.author = CU.user_name;
             room.Postsref.Add(newpost.id);
             await Firestore.Firestore.CreatePost(newpost);
 
