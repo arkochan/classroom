@@ -167,6 +167,10 @@ namespace classroom
             //add it to view
             //update current Room
         }
+        public static void CreatePost(string roomid, string content_)
+        {
+
+        }
         
 
 

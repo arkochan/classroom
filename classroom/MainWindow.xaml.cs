@@ -82,6 +82,11 @@ namespace classroom
             program.Addstudent(lb_rooms.SelectedItem.ToString(), addStudenttb.Text);
             lb_students.Items.Refresh();
         }
+
+        private void postbutton_Click(object sender, RoutedEventArgs e)
+        {
+            program.createpost( ClassSelectorCB.SelectedItem.ToString(), 
+        }
     }
 }
 
