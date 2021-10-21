@@ -133,6 +133,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\post.cs" />
     <Compile Include="Firestore\Firestore.cs" />
     <Compile Include="program.cs" />
     <Compile Include="Views\Login.xaml.cs">
@@ -194,6 +195,9 @@
     <Content Include="classroomt.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

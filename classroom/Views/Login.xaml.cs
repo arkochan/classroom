@@ -29,11 +29,9 @@ namespace classroom.Views
             //auth 
             if (program.UserLogin(namebox.Text, pwbox.Password.ToString()))
             {
-                program.CU.user_name = namebox.Text;
                 var mw = new MainWindow();
                 mw.Show();
                 this.Close();
-
             }
             else
             {

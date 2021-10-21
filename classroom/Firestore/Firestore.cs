@@ -27,7 +27,17 @@ namespace classroom.Firestore
         //    DocumentReference roomdoc = db.Collection("rooms").Document(roomcode);
 
         //}
-
+        public static async Task<classes.Room> GetRoomAsync(string name)
+        {
+            DocumentReference roomref = db.Collection("rooms").Document(name);
+            DocumentSnapshot roomsnapshot = await roomref.GetSnapshotAsync();
+            if (roomsnapshot.Exists) //user exist
+            {
+                return roomsnapshot.ConvertTo<classes.Room>();
+            }
+            else
+            { return null; }
+        }
         public static async Task<bool> AddStudentfs(classes.User user, string rid)
         {
             DocumentReference userref = db.Collection("users").Document(user.user_name);
@@ -128,9 +138,16 @@ namespace classroom.Firestore
             }
             return flag;
         }
-        public static async void Signup(string id, string pass)
-        {   //adds user to db
+       // public static async  Signup(string id, string pass)
+       // {   //adds user to db
 
+       // }
+        public static async Task<bool> FindUser(string username)
+        {
+            
+            
+            return (await db.Collection("users").Document(username).GetSnapshotAsync()).Exists;
+           
         }
         public static string GetRandomString(int stringLength = 4)
         {

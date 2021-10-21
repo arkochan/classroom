@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using classroom.classes;
 using classroom.Firestore;
+using Google.Cloud.Firestore;
 
 namespace classroom
 {
@@ -46,6 +47,40 @@ namespace classroom
 
         }
 
+        public static async Task<Room> ShowClass(string nameT)
+        {
+            Room Loadedroom;
+            if (User.RoomsStudent.ContainsKey(nameT))
+            {
+                return User.RoomsStudent[nameT];
+            }
+            else if (User.RoomsTeacher.ContainsKey(nameT))
+            {
+                return User.RoomsTeacher[nameT];
+            }
+            else
+            {
+
+                Loadedroom = await LoadRoom(nameT);
+                if (Loadedroom.teachers.IndexOf(CU.user_name) > -1)
+                //if cu is a techer of that room
+                {
+                    User.RoomsTeacher.Add(nameT, Loadedroom);
+                }
+                else
+                {
+                    User.RoomsStudent.Add(nameT, Loadedroom);
+                }
+            }
+            return Loadedroom;
+        }
+        public static async Task<Room> LoadRoom(string nameT)
+        {
+            return await Firestore.Firestore.GetRoomAsync(nameT);
+
+
+        }
+
 
         public static bool UserLogin(/*Argument*/string userid, string password)
         {
@@ -57,8 +92,8 @@ namespace classroom
             if (Firestore.Firestore.flag)
             {
                 program.CU = Firestore.Firestore.tempuser;
-                if (User.RoomsTeacher == null) User.RoomsTeacher = new ArrayList();
-                if (User.RoomsStudent == null) User.RoomsStudent = new ArrayList();
+                if (User.RoomsTeacher == null) User.RoomsTeacher = new Dictionary<string, Room>();
+                if (User.RoomsStudent == null) User.RoomsStudent = new Dictionary<string, Room>();
                 if (program.CU.RoomsTeacherRef == null)
                 {
                     program.CU.RoomsTeacherRef = new ArrayList();
@@ -67,6 +102,8 @@ namespace classroom
                 if (program.CU.RoomsStudentRef == null) program.CU.RoomsStudentRef = new ArrayList();
                 if (classes.User.Allrooms == null) classes.User.Allrooms = new ArrayList();
 
+                classes.User.Allrooms.AddRange(program.CU.RoomsTeacherRef);
+                classes.User.Allrooms.AddRange(program.CU.RoomsStudentRef);
                 return true;
             }
             else
@@ -94,26 +131,44 @@ namespace classroom
             //add it to firestore
             await Firestore.Firestore.CreateRoom(newRoom);
             Firestore.Firestore.updateUser(CU.user_name);
-            classes.User.RoomsTeacher.Add(newRoom);
+            classes.User.RoomsTeacher.Add(newRoom.Name + "#" + newRoom.tag, newRoom);
             CU.RoomsTeacherRef.Add(newRoom.Name + "#" + newRoom.tag);
-            classes.User.Allrooms.Add(newRoom.Name);
+            classes.User.Allrooms.Add(newRoom.Name + "#" + newRoom.tag);
             //add it to CU array
             return newRoom;
             //cache 
         }
-        public static void Addstudent(/*Argument*/)
-        {
+
+        public static async Task Addstudent(string roomRef, string studentUserId)
             //this should be invitation based 
+        {
+            var task = Firestore.Firestore.FindUser(studentUserId);
 
-
-
-            //search for the user id
-            //get student object from firestore
+            Firestore.Firestore.FindUser(studentUserId);
+            Room room = User.RoomsTeacher[roomRef];
             //check if student already exists in the class
-            //add it to view
+            if (room.IndexOfStudent(studentUserId) > -1)
+            {
+                status?.Invoke(null, $"{studentUserId} Already exists in {roomRef}");//tryctach
+
+                return;
+            }
+            //search for the user id
+
+            if(!await task)
+            {
+                status?.Invoke(null, $"User {studentUserId} Doesn\'t Exist");
+                return;//tryctach
+            }
             //add it to current room's array
+            room.AddStudent(studentUserId);
+            room.update();
+
+            //add it to view
             //update current Room
         }
+        
+
 
 
 

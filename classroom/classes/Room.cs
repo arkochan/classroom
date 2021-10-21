@@ -36,11 +36,27 @@ namespace classroom.classes
 
 
         ~Room() { }
-
+        public void AddStudent(string userid)
+        {
+            students.Add(userid);
+        }
         public string learningAnalysis() // send a report of the whole class --> learning curve
         {
             return "test";
         }
-
+        public int IndexOfStudent(string id)
+        {
+            return students.IndexOf(id);
+        }
+        public void update()
+        {
+            DocumentReference docRef = Firestore.Firestore.db.Collection("rooms").Document(Name+"#"+tag);
+            Dictionary<string, object> update = new Dictionary<string, object>
+            {
+                { "students" , students },
+                { "teachers" , teachers }
+            };
+            docRef.UpdateAsync(update);
+        }
     }
 }

@@ -11,11 +11,12 @@ namespace classroom.classes
     [FirestoreData]
     public partial class User
     {
-        public static ArrayList Allrooms;
+        
+        public static ArrayList Allrooms { get; set; }
         public User()
         {
-            RoomsTeacher = new ArrayList();
-            RoomsStudent = new ArrayList();
+            RoomsTeacher = new Dictionary<string, Room>();
+            RoomsStudent = new Dictionary<string, Room>();
         }
         [FirestoreProperty]
         public string email { get; set; }
@@ -23,8 +24,8 @@ namespace classroom.classes
         public string password { get; set; }
         [FirestoreProperty]
         public string user_name { get; set; }  
-        public static ArrayList RoomsTeacher { get; set; }
-        public static ArrayList RoomsStudent { get; set; }
+        public static Dictionary<string, Room> RoomsTeacher { get; set; }
+        public static Dictionary<string, Room> RoomsStudent { get; set; }
 
 
 
@@ -51,8 +52,11 @@ namespace classroom.classes
         }
         public void addRoom(classes.Room room)
         {
-            
-            RoomsTeacher.Add(room);
+
+        }
+        public bool IsTeacher(string roomName)
+        {
+           return RoomsTeacherRef.IndexOf(roomName)>-1;
         }
         public void generateUniqueID()
         {
