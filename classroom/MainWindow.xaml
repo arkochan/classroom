@@ -94,8 +94,7 @@
                         </DockPanel>
                         <ListBox SelectionChanged="lb_students_SelectionChanged"
                                  Name="lb_students"
-                                 SelectionMode="Single"
-                                 >
+                                 SelectionMode="Single">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" />
@@ -103,24 +102,59 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </DockPanel>
-                    <DockPanel Margin="10"
-                               Grid.Column="1">
+                    <Grid Margin="10"
+                          Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="4*" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="10*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Create Post"
+                                   FontWeight="Bold"
+                                   Grid.Row="0" />
                         <TextBlock Text="Posts"
                                    FontWeight="Bold"
-                                   DockPanel.Dock="Top" />
-                        <ListBox
-                                 Name="lb_posts"
+                                   Grid.Row="2" />
+                        <Grid Grid.Row="1"
+                              Margin="0,5,0,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <TextBox Text="Create a Post"
+                                     DockPanel.Dock="Top"
+                                     TextWrapping="Wrap"
+                                     AcceptsReturn="True" 
+                                     Grid.Row="0"/>
+                            <DockPanel Grid.Row="1" Margin="0,5,0,5">
+                                <Button Content="post"
+                                        DockPanel.Dock="Right" 
+                                        Width="70"
+                                        Margin="5,0,0,0"/>
+                                <TextBlock Text="Classroom:"
+                                           DockPanel.Dock="Left" 
+                                           VerticalAlignment="Bottom"
+                                           />
+                                <ComboBox Margin="5,0,5,0">
+                                    
+                                </ComboBox>
+                            </DockPanel>
+                        </Grid>
+                        <ListBox Name="lb_posts"
                                  SelectionMode="Single"
-                                >
+                                 Grid.Row="3">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                    </DockPanel>
+                    </Grid>
                 </Grid>
             </TabItem>
+            <TabItem Header="Invitations"></TabItem>
+            <TabItem Header="Invitations"></TabItem>
         </TabControl>
         <TextBlock Name="cutb"
                    Text="..."

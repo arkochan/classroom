@@ -14,7 +14,9 @@ namespace classroom.classes
         [FirestoreProperty]
         public ArrayList teachers { get; set; }
         [FirestoreProperty]
-        public ArrayList students { get; set; }
+        public ArrayList students { get; set; } 
+        [FirestoreProperty]
+        public ArrayList Postsref { get; set; }
         [FirestoreProperty]
         public string department_name { get; set; }
         [FirestoreProperty]
