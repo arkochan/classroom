@@ -32,6 +32,8 @@ namespace classroom
             lb_rooms.ItemsSource = classes.User.Allrooms;
             cutb.Text = "Current User: " + program.CU.user_name;
             program.status += Program_status;
+            ClassSelectorCB.ItemsSource=program.CU.RoomsTeacherRef;
+
         }
 
         private void Program_status(object sender, string e)
@@ -49,7 +51,7 @@ namespace classroom
 
             lb_students.ItemsSource = (await program.ShowClass(lb_rooms.SelectedItem.ToString())).students;
 
-            
+
             lb_students.Items.Refresh();
 
             addStudentButton.IsEnabled = program.CU.IsTeacher(lb_rooms.SelectedItem.ToString());
@@ -85,7 +87,13 @@ namespace classroom
 
         private void postbutton_Click(object sender, RoutedEventArgs e)
         {
-            program.createpost( ClassSelectorCB.SelectedItem.ToString(), 
+            program.CreatePost(ClassSelectorCB.SelectedItem.ToString(), PostCreate.Text);
+
+        }
+
+        private void ClassSelectorCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

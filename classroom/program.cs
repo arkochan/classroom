@@ -167,11 +167,26 @@ namespace classroom
             //add it to view
             //update current Room
         }
-        public static void CreatePost(string roomid, string content_)
+        public async static Task CreatePost(string roomid, string content_)
         {
+            var getroomTask= Firestore.Firestore.GetRoomAsync(roomid);
+            Post newpost = new Post(content_);
+            if(!User.RoomsTeacher.ContainsKey(roomid))
+            {
+
+                User.RoomsTeacher[roomid] = await getroomTask;
+            }
+       
+            Room room = User.RoomsTeacher[roomid];
+
+           // newpost.author = CU.user_name;
+            room.Postsref.Add(newpost.id);
+            Firestore.Firestore.CreatePost(newpost);
+
+
 
         }
-        
+
 
 
 

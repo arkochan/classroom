@@ -101,6 +101,28 @@ namespace classroom.Firestore
             snapshot = await roomRef.GetSnapshotAsync();
             await roomRef.SetAsync(program.CU);
         }
+        public static async Task<bool> CreatePost(classes.Post post)
+        {
+
+            int count = 0;
+            string pid;
+            DocumentReference postRef = db.Collection("posts").Document("pid");
+            DocumentSnapshot snapshot;
+            while (count++ < 100) //to make risk free 
+            {
+
+                pid = post.id;
+                postRef = db.Collection("posts").Document(pid);
+                snapshot = await postRef.GetSnapshotAsync();
+                if (snapshot.Exists == false)
+                {
+                    //room.tag = tag;
+                    await postRef.SetAsync(post);
+                    return true;
+                }
+            }
+            return false;
+        }
         public static async Task<classes.User> GetUserAsync(string id)
         {
             DocumentReference userref = db.Collection("users").Document(id);

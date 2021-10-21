@@ -127,6 +127,7 @@
                                      TextWrapping="Wrap"
                                      AcceptsReturn="True" 
                                      Grid.Row="0"
+                                     Name="PostCreate"
                                      />
                             <DockPanel Grid.Row="1" Margin="0,5,0,5">
                                 <Button Content="post"
@@ -140,8 +141,8 @@
                                            VerticalAlignment="Bottom"
                                            />
                                 <ComboBox Margin="5,0,5,0"
-                                          Name="ClassSelectorCB">
-                                    
+                                          Name="ClassSelectorCB" SelectionChanged="ClassSelectorCB_SelectionChanged">
+
                                 </ComboBox>
                             </DockPanel>
                         </Grid>

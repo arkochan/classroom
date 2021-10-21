@@ -35,7 +35,10 @@ namespace classroom.classes
        // int[,] attendece = new int[100, 100]; // on review // attendence[id][day] = 1/0
        // Dictionary<string, ExamResult> examresults = new Dictionary<string, ExamResult>(); // student id -> exam result
        // CourseResult courseresult = new CourseResult();
-
+       public Room()
+        {
+            Postsref = new ArrayList();
+        }
 
         ~Room() { }
         public void AddStudent(string userid)
