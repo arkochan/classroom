@@ -92,6 +92,8 @@ namespace classroom
         {
             program.CreatePost(ClassSelectorCB.SelectedItem.ToString(), PostCreate.Text);
 
+            
+
         }
 
         private void ClassSelectorCB_SelectionChanged(object sender, SelectionChangedEventArgs e)

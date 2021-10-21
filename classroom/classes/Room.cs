@@ -59,7 +59,8 @@ namespace classroom.classes
             Dictionary<string, object> update = new Dictionary<string, object>
             {
                 { "students" , students },
-                { "teachers" , teachers }
+                { "teachers" , teachers },
+                { "Postsref" , Postsref },
             };
             docRef.UpdateAsync(update);
         }

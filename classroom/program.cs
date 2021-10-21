@@ -172,7 +172,7 @@ namespace classroom
             var getroomTask = Firestore.Firestore.GetRoomAsync(roomid);
             Post newpost = new Post(content_)
             {
-                roomid=roomid
+                roomid = roomid
             };
             if (!User.RoomsTeacher.ContainsKey(roomid))
             {
@@ -186,6 +186,7 @@ namespace classroom
             // newpost.author = CU.user_name;
             room.Postsref.Add(newpost.id);
             await Firestore.Firestore.CreatePost(newpost);
+            room.update();
 
 
 
