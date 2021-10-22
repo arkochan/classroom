@@ -213,7 +213,7 @@ namespace classroom
             
             foreach(DocumentSnapshot documentSnapshot in snapshots.Documents)
             {
-                postsarray.Add(documentSnapshot.ConvertTo<Post>());
+                postsarray.Add(new Post (documentSnapshot.ToDictionary())) ;
 
                 //Post post = snapshots.
                 //count++;
