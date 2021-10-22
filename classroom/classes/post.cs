@@ -24,6 +24,10 @@ namespace classroom.classes
         public ArrayList comments { get; set; }
         [FirestoreProperty]
         public ArrayList reactors { get; set; }
+        public Post()
+        {
+
+        }
         public Post(string content_)
         {
             content = content_;

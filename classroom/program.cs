@@ -192,7 +192,45 @@ namespace classroom
 
         }
 
+        public async static Task<ArrayList> Getposts(string roomid)
+        {
+            //int count = 0;
+           
+            ArrayList postsarray = new ArrayList();
+            ArrayList arrayList = new ArrayList();
+            CollectionReference postref= Firestore.Firestore.db.Collection("posts");
+            Query query = postref.WhereEqualTo("roomid", roomid);
+            QuerySnapshot snapshots= await query.GetSnapshotAsync();
 
+           /* DocumentReference docRef = Firestore.Firestore.db.Collection("posts").Document("roomid");
+            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+            if(snapshot.Exists)
+            {
+                postsarray.Add(snapshot.Id);
+                Post post = snapshot.ConvertTo<Post>();
+                arrayList
+            }*/
+            
+            foreach(DocumentSnapshot documentSnapshot in snapshots.Documents)
+            {
+                postsarray.Add(documentSnapshot.ConvertTo<Post>());
+
+                //Post post = snapshots.
+                //count++;
+               /* Dictionary<string, Object> postDictionary = new Dictionary<string, object>();
+                foreach(object obj in postsarray)
+                {
+                    Post posts=documentSnapshot.ConvertTo<Post>();
+                    postDictionary.Add(posts.id, posts);
+                }*/
+                
+            }
+            return postsarray;
+            //return arrayList;
+            //... 
+           // ...
+          //return list_allpost_of_roomid;
+        }
 
 
 

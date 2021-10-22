@@ -148,10 +148,10 @@
                         </Grid>
                         <ListBox Name="lb_posts"
                                  SelectionMode="Single"
-                                 Grid.Row="3">
+                                 Grid.Row="3" SelectionChanged="lb_posts_SelectionChanged">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" />
+                                    <TextBlock Text="{Binding content}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
