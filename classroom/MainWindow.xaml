@@ -10,7 +10,11 @@
         Width="800"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <TabControl>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.ColumnSpan="2" Margin="0,0,-0.4,0.4">
             <TabItem Header="Create class">
                 <Grid Margin="1"
                       Height="300"
@@ -228,9 +232,9 @@
         <TextBlock Name="cutb"
                    Text="..."
                    HorizontalAlignment="Right"
-                   VerticalAlignment="Top" />
-        <Button Margin="492,0,255,453"
-                Click="Ref_Button_Click"
+                   VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,-0.4,0" />
+        <Button Margin="492,0,254.6,453.4"
+                Click="Ref_Button_Click" Grid.ColumnSpan="2"
                  />
     </Grid>
 </Window>

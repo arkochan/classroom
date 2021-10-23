@@ -60,6 +60,8 @@ namespace classroom
             lb_students.Items.Refresh();
 
             addStudentButton.IsEnabled = program.CU.IsTeacher(lb_rooms.SelectedItem.ToString());
+            removeStudentButton.IsEnabled = program.CU.IsTeacher(lb_rooms.SelectedItem.ToString());
+
             var array = (await program.Getposts(lb_rooms.SelectedItem.ToString()));
             //MessageBox.Show(array[1].ToString());
             lb_posts.ItemsSource = array;
@@ -69,7 +71,8 @@ namespace classroom
 
         private void Button_remove(object sender, RoutedEventArgs e)
         {
-
+            program.Removestudent(lb_rooms.SelectedItem.ToString(), lb_students.SelectedItem.ToString());
+            lb_students.Items.Refresh();
         }
 
 

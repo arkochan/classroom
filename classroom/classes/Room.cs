@@ -45,6 +45,10 @@ namespace classroom.classes
         {
             students.Add(userid);
         }
+        public void RemoveStudent(string userid)
+        {
+            students.Remove(userid);
+        }
         public string learningAnalysis() // send a report of the whole class --> learning curve
         {
             return "test";

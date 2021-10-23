@@ -174,6 +174,34 @@ namespace classroom
             //add it to view
             //update current Room
         }
+        public static async Task Removestudent(string roomRef, string studentUserId)
+        {
+            var task = Firestore.Firestore.FindUser(studentUserId);
+
+           // Firestore.Firestore.FindUser(studentUserId);
+            Room room = User.RoomsTeacher[roomRef];
+            //check if student exists in the class
+            if (room.IndexOfStudent(studentUserId) < -1)
+            {
+                Log($"{studentUserId} Not exists in class {roomRef}");//tryctach
+
+                return;
+            }
+            //search for the user id
+            var snap = await task;
+            if (!(snap).Exists)
+            {
+                Log($"User {studentUserId} Doesn\'t Exist");
+                return;//tryctach
+            }
+
+
+            room.RemoveStudent(studentUserId);
+            room.update();
+
+            //add it to view
+            //update current Room
+        }
         public static async Task Invite(string userid, string roomid)
         {
             await Firestore.Firestore.db.Collection("users").Document(userid).UpdateAsync("Invitations", FieldValue.ArrayUnion(roomid));
