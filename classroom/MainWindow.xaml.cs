@@ -35,12 +35,15 @@ namespace classroom
             Firestore.Firestore.status += Program_status;
             Firestore.Firestore.secret();
             ClassSelectorCB.ItemsSource = program.CU.RoomsTeacherRef;
+            lb_invitations.ItemsSource = program.CU.Invitations;
+
+            Invitationtb.Text = "Invitations (" +program.CU.Invitations.Count.ToString() + "):";
 
         }
 
         private void Program_status(object sender, string e)
         {
-            LogBox.Text += System.DateTime.Now.ToString()+": " + e + "\n";
+            LogBox.Text += System.DateTime.Now.ToString() + ": " + e + "\n";
         }
 
         private void lb_students_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -57,7 +60,7 @@ namespace classroom
             lb_students.Items.Refresh();
 
             addStudentButton.IsEnabled = program.CU.IsTeacher(lb_rooms.SelectedItem.ToString());
-            var array= (await program.Getposts(lb_rooms.SelectedItem.ToString()));
+            var array = (await program.Getposts(lb_rooms.SelectedItem.ToString()));
             //MessageBox.Show(array[1].ToString());
             lb_posts.ItemsSource = array;
             lb_posts.Items.Refresh();
@@ -108,6 +111,24 @@ namespace classroom
         {
 
         }
+
+        private void accept_button_click(object sender, RoutedEventArgs e)
+        {
+            program.Joinclass(lb_invitations.SelectedItem.ToString(), program.CU.user_name);
+            lb_invitations.Items.Refresh();
+            Invitationtb.Text = "Invitations (" + program.CU.Invitations.Count.ToString() + "):";
+        }
+
+        private void Ref_Button_Click(object sender, RoutedEventArgs e)
+        {
+            program.UserRefresh();
+            lb_invitations.Items.Refresh();
+            lb_posts.Items.Refresh();
+            lb_rooms.Items.Refresh();
+            lb_students.Items.Refresh();
+            Invitationtb.Text = "Invitations (" + program.CU.Invitations.Count.ToString() + "):";
+        }
+
     }
 }
 

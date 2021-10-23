@@ -149,7 +149,7 @@
                                  Grid.Row="3"
                                  SelectionChanged="lb_posts_SelectionChanged"
                                  HorizontalContentAlignment="Stretch">
-                            <ListBox.ItemTemplate >
+                            <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="4">
                                         <Grid.RowDefinitions>
@@ -181,7 +181,36 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Invitations"></TabItem>
+            <TabItem Header="Invitations">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Invitation"
+                               FontWeight="Bold"
+                               Grid.Row="0" 
+                               Name="Invitationtb"/>
+                    <ListBox SelectionChanged="lb_students_SelectionChanged"
+                             Name="lb_invitations"
+                             SelectionMode="Single"
+                             Grid.Row="1">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Content="Accept"
+                            Grid.Row="2"
+                            Click="accept_button_click" />
+                </Grid>
+            </TabItem>
             <TabItem Header="Logs">
                 <Grid  Margin="10">
                     <Grid.RowDefinitions>
@@ -200,5 +229,8 @@
                    Text="..."
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top" />
+        <Button Margin="492,0,255,453"
+                Click="Ref_Button_Click"
+                 />
     </Grid>
 </Window>

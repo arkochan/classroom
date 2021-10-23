@@ -26,7 +26,10 @@ namespace classroom
             };
         }
 
+        public static void UserRefresh()
+        {
 
+        }
         public static bool UserSignup(string _username, string _password/*Argument*/)
         {
 
@@ -82,11 +85,11 @@ namespace classroom
         }
 
 
-        public static bool UserLogin(/*Argument*/string userid, string password)
+        public async static Task<bool> UserLogin(/*Argument*/string userid, string password)
         {
             //auth
 
-            var result = Task.Run(async () => await Firestore.Firestore.AuthUser(userid, password)).Result;
+            var result = await Firestore.Firestore.AuthUser(userid, password);
 
 
             if (Firestore.Firestore.flag)
@@ -97,7 +100,7 @@ namespace classroom
                 if (program.CU.RoomsTeacherRef == null)
                 {
                     program.CU.RoomsTeacherRef = new ArrayList();
-                    Log( "program.CU.RoomsTeacherRef was null");
+                    Log("program.CU.RoomsTeacherRef was null");
                 }
                 if (program.CU.RoomsStudentRef == null) program.CU.RoomsStudentRef = new ArrayList();
                 if (classes.User.Allrooms == null) classes.User.Allrooms = new ArrayList();
@@ -149,23 +152,32 @@ namespace classroom
             //check if student already exists in the class
             if (room.IndexOfStudent(studentUserId) > -1)
             {
-                Log( $"{studentUserId} Already exists in {roomRef}");//tryctach
+                Log($"{studentUserId} Already exists in {roomRef}");//tryctach
 
                 return;
             }
             //search for the user id
-
-            if (!await task)
+            var snap = await task;
+            if (!(snap).Exists)
             {
-                Log( $"User {studentUserId} Doesn\'t Exist");
+                Log($"User {studentUserId} Doesn\'t Exist");
                 return;//tryctach
             }
+
             //add it to current room's array
-            room.AddStudent(studentUserId);
-            room.update();
+
+            Invite(studentUserId, roomRef);
+
+            //room.AddStudent(studentUserId);
+            //room.update();
 
             //add it to view
             //update current Room
+        }
+        public static async Task Invite(string userid, string roomid)
+        {
+            await Firestore.Firestore.db.Collection("users").Document(userid).UpdateAsync("Invitations", FieldValue.ArrayUnion(roomid));
+
         }
         public async static Task CreatePost(string roomid, string content_)
         {
@@ -181,7 +193,7 @@ namespace classroom
             }
 
             Room room = User.RoomsTeacher[roomid];
-            Log( $"{room.Name} loaded");
+            Log($"{room.Name} loaded");
 
             // newpost.author = CU.user_name;
             room.Postsref.Add(newpost.id);
@@ -234,6 +246,19 @@ namespace classroom
         public static void Log(string s)
         {
             status?.Invoke(null, s);
+        }
+        public static async Task Joinclass(string roomid, string userid)
+        {
+            //add user under that room
+            Firestore.Firestore.db.Collection("rooms").Document(roomid).UpdateAsync("students", FieldValue.ArrayUnion(userid));
+            //add roomid under users st ref
+            CU.RoomsStudentRef.Add(roomid);
+            //remove invitaion from fstore
+            Firestore.Firestore.db.Collection("rooms").Document(roomid).UpdateAsync("Invitations", FieldValue.ArrayRemove(roomid));
+            //remove invitaion from local            
+            CU.Invitations.Remove(roomid);
+            User.Allrooms.Add(roomid);
+
         }
 
     }

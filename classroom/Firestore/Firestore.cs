@@ -180,11 +180,11 @@ namespace classroom.Firestore
         // {   //adds user to db
 
         // }
-        public static async Task<bool> FindUser(string username)
+        public static async Task<DocumentSnapshot> FindUser(string username)
         {
 
 
-            return (await db.Collection("users").Document(username).GetSnapshotAsync()).Exists;
+            return (await db.Collection("users").Document(username).GetSnapshotAsync());
 
         }
         public static string GetRandomString(int stringLength = 4)
@@ -200,18 +200,18 @@ namespace classroom.Firestore
         }
         public static void secret()
         {
-            DocumentReference docRef = db.Collection("users").Document("a");
+            DocumentReference docRef = db.Collection("users").Document(program.CU.user_name);
             FirestoreChangeListener listener = docRef.Listen(snapshot =>
             {
                 Console.WriteLine("Callback received document snapshot.");
-                Console.WriteLine("Document exists? {0}", snapshot.Exists);
+                Console.WriteLine($"Document exists? {snapshot.Exists}");
                 if (snapshot.Exists)
                 {
-                    Console.WriteLine("Document data for {0} document:", snapshot.Id);
+                    Console.WriteLine($"Document data for {snapshot.Id} document:");
                     Dictionary<string, object> city = snapshot.ToDictionary();
                     foreach (KeyValuePair<string, object> pair in city)
                     {
-                        Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
+                        Console.WriteLine($"{pair.Key}: {pair.Value}");
                     }
                 }
             });

@@ -24,10 +24,10 @@ namespace classroom.Views
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             //auth 
-            if (program.UserLogin(namebox.Text, pwbox.Password.ToString()))
+            if (await program.UserLogin(namebox.Text, pwbox.Password.ToString()))
             {
                 var mw = new MainWindow();
                 mw.Show();
