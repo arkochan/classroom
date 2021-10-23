@@ -15,6 +15,7 @@ namespace classroom.Firestore
         public static classes.User tempuser { get; set; }
 
         public static EventHandler userexisnt;
+        public static EventHandler<string> status;
 
         public static FirestoreDb db;
         public static void Init()
@@ -101,6 +102,43 @@ namespace classroom.Firestore
             snapshot = await roomRef.GetSnapshotAsync();
             await roomRef.SetAsync(program.CU);
         }
+        public static async Task<bool> CreatePost(classes.Post post)
+        {
+
+            int count = 0;
+            string pid;
+            DocumentReference postRef;
+            DocumentSnapshot snapshot;
+            while (count++ < 100) //to make risk free 
+            {
+
+                pid = post.id;
+                postRef = db.Collection("posts").Document(pid);
+                snapshot = await postRef.GetSnapshotAsync();
+
+
+                if (snapshot.Exists == false)
+                {
+                    //room.tag = tag;
+                    await postRef.SetAsync(new Dictionary<string, object>
+                    {
+                        {"id",post.id },
+                        {"content",post.content },
+                        {"author",post.author },
+                        {"creationDate", post.creationDate },
+                        {"roomid",post.roomid },
+                        {"comments",post.comments },
+                        {"reactors",post.reactors }});
+
+                    return true;
+                }
+                else
+                {
+                    pid = post.id = GetRandomString(8);
+                }
+            }
+            return false;
+        }
         public static async Task<classes.User> GetUserAsync(string id)
         {
             DocumentReference userref = db.Collection("users").Document(id);
@@ -138,16 +176,16 @@ namespace classroom.Firestore
             }
             return flag;
         }
-       // public static async  Signup(string id, string pass)
-       // {   //adds user to db
+        // public static async  Signup(string id, string pass)
+        // {   //adds user to db
 
-       // }
-        public static async Task<bool> FindUser(string username)
+        // }
+        public static async Task<DocumentSnapshot> FindUser(string username)
         {
-            
-            
-            return (await db.Collection("users").Document(username).GetSnapshotAsync()).Exists;
-           
+
+
+            return (await db.Collection("users").Document(username).GetSnapshotAsync());
+
         }
         public static string GetRandomString(int stringLength = 4)
         {
@@ -160,6 +198,27 @@ namespace classroom.Firestore
 
             return sb.ToString(0, stringLength);
         }
+        public static void secret()
+        {
+            DocumentReference docRef = db.Collection("users").Document(program.CU.user_name);
+            FirestoreChangeListener listener = docRef.Listen(snapshot =>
+            {
+                Console.WriteLine("Callback received document snapshot.");
+                Console.WriteLine($"Document exists? {snapshot.Exists}");
+                if (snapshot.Exists)
+                {
+                    Console.WriteLine($"Document data for {snapshot.Id} document:");
+                    Dictionary<string, object> city = snapshot.ToDictionary();
+                    foreach (KeyValuePair<string, object> pair in city)
+                    {
+                        Console.WriteLine($"{pair.Key}: {pair.Value}");
+                    }
+                }
+            });
+
+
+        }
+
 
     }
 }

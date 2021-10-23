@@ -26,7 +26,10 @@ namespace classroom
             };
         }
 
+        public static void UserRefresh()
+        {
 
+        }
         public static bool UserSignup(string _username, string _password/*Argument*/)
         {
 
@@ -82,11 +85,11 @@ namespace classroom
         }
 
 
-        public static bool UserLogin(/*Argument*/string userid, string password)
+        public async static Task<bool> UserLogin(/*Argument*/string userid, string password)
         {
             //auth
 
-            var result = Task.Run(async () => await Firestore.Firestore.AuthUser(userid, password)).Result;
+            var result = await Firestore.Firestore.AuthUser(userid, password);
 
 
             if (Firestore.Firestore.flag)
@@ -97,7 +100,7 @@ namespace classroom
                 if (program.CU.RoomsTeacherRef == null)
                 {
                     program.CU.RoomsTeacherRef = new ArrayList();
-                    status?.Invoke(CU, "program.CU.RoomsTeacherRef was null");
+                    Log("program.CU.RoomsTeacherRef was null");
                 }
                 if (program.CU.RoomsStudentRef == null) program.CU.RoomsStudentRef = new ArrayList();
                 if (classes.User.Allrooms == null) classes.User.Allrooms = new ArrayList();
@@ -140,7 +143,7 @@ namespace classroom
         }
 
         public static async Task Addstudent(string roomRef, string studentUserId)
-            //this should be invitation based 
+        //this should be invitation based 
         {
             var task = Firestore.Firestore.FindUser(studentUserId);
 
@@ -149,32 +152,114 @@ namespace classroom
             //check if student already exists in the class
             if (room.IndexOfStudent(studentUserId) > -1)
             {
-                status?.Invoke(null, $"{studentUserId} Already exists in {roomRef}");//tryctach
+                Log($"{studentUserId} Already exists in {roomRef}");//tryctach
 
                 return;
             }
             //search for the user id
-
-            if(!await task)
+            var snap = await task;
+            if (!(snap).Exists)
             {
-                status?.Invoke(null, $"User {studentUserId} Doesn\'t Exist");
+                Log($"User {studentUserId} Doesn\'t Exist");
                 return;//tryctach
             }
+
             //add it to current room's array
-            room.AddStudent(studentUserId);
-            room.update();
+
+            Invite(studentUserId, roomRef);
+
+            //room.AddStudent(studentUserId);
+            //room.update();
 
             //add it to view
             //update current Room
         }
-        public static void CreatePost(string roomid, string content_)
+        public static async Task Invite(string userid, string roomid)
         {
+            await Firestore.Firestore.db.Collection("users").Document(userid).UpdateAsync("Invitations", FieldValue.ArrayUnion(roomid));
 
         }
-        
+        public async static Task CreatePost(string roomid, string content_)
+        {
+            var getroomTask = Firestore.Firestore.GetRoomAsync(roomid);
+            Post newpost = new Post(content_)
+            {
+                roomid = roomid
+            };
+            if (!User.RoomsTeacher.ContainsKey(roomid))
+            {
+
+                User.RoomsTeacher.Add(roomid, await getroomTask);
+            }
+
+            Room room = User.RoomsTeacher[roomid];
+            Log($"{room.Name} loaded");
+
+            // newpost.author = CU.user_name;
+            room.Postsref.Add(newpost.id);
+            await Firestore.Firestore.CreatePost(newpost);
+            room.update();
 
 
 
+        }
+
+        public async static Task<ArrayList> Getposts(string roomid)
+        {
+            //int count = 0;
+
+            ArrayList postsarray = new ArrayList();
+            ArrayList arrayList = new ArrayList();
+            CollectionReference postref = Firestore.Firestore.db.Collection("posts");
+            Query query = postref.WhereEqualTo("roomid", roomid);
+            QuerySnapshot snapshots = await query.GetSnapshotAsync();
+
+            /* DocumentReference docRef = Firestore.Firestore.db.Collection("posts").Document("roomid");
+             DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+             if(snapshot.Exists)
+             {
+                 postsarray.Add(snapshot.Id);
+                 Post post = snapshot.ConvertTo<Post>();
+                 arrayList
+             }*/
+
+            foreach (DocumentSnapshot documentSnapshot in snapshots.Documents)
+            {
+                postsarray.Add(new Post(documentSnapshot.ToDictionary()));
+
+                //Post post = snapshots.
+                //count++;
+                /* Dictionary<string, Object> postDictionary = new Dictionary<string, object>();
+                 foreach(object obj in postsarray)
+                 {
+                     Post posts=documentSnapshot.ConvertTo<Post>();
+                     postDictionary.Add(posts.id, posts);
+                 }*/
+
+            }
+            return postsarray;
+            //return arrayList;
+            //... 
+            // ...
+            //return list_allpost_of_roomid;
+        }
+        public static void Log(string s)
+        {
+            status?.Invoke(null, s);
+        }
+        public static async Task Joinclass(string roomid, string userid)
+        {
+            //add user under that room
+            Firestore.Firestore.db.Collection("rooms").Document(roomid).UpdateAsync("students", FieldValue.ArrayUnion(userid));
+            //add roomid under users st ref
+            CU.RoomsStudentRef.Add(roomid);
+            //remove invitaion from fstore
+            Firestore.Firestore.db.Collection("rooms").Document(roomid).UpdateAsync("Invitations", FieldValue.ArrayRemove(roomid));
+            //remove invitaion from local            
+            CU.Invitations.Remove(roomid);
+            User.Allrooms.Add(roomid);
+
+        }
 
     }
 }

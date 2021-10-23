@@ -125,44 +125,112 @@
                             <TextBox Text="Create a Post"
                                      DockPanel.Dock="Top"
                                      TextWrapping="Wrap"
-                                     AcceptsReturn="True" 
+                                     AcceptsReturn="True"
                                      Grid.Row="0"
-                                     />
-                            <DockPanel Grid.Row="1" Margin="0,5,0,5">
+                                     Name="PostCreate" />
+                            <DockPanel Grid.Row="1"
+                                       Margin="0,5,0,5">
                                 <Button Content="post"
-                                        DockPanel.Dock="Right" 
+                                        DockPanel.Dock="Right"
                                         Width="70"
                                         Margin="5,0,0,0"
                                         Name="postbutton"
                                         Click="postbutton_Click" />
                                 <TextBlock Text="Classroom:"
-                                           DockPanel.Dock="Left" 
-                                           VerticalAlignment="Bottom"
-                                           />
+                                           DockPanel.Dock="Left"
+                                           VerticalAlignment="Bottom" />
                                 <ComboBox Margin="5,0,5,0"
-                                          Name="ClassSelectorCB">
-                                    
-                                </ComboBox>
+                                          Name="ClassSelectorCB"
+                                          SelectionChanged="ClassSelectorCB_SelectionChanged"></ComboBox>
                             </DockPanel>
                         </Grid>
                         <ListBox Name="lb_posts"
                                  SelectionMode="Single"
-                                 Grid.Row="3">
+                                 Grid.Row="3"
+                                 SelectionChanged="lb_posts_SelectionChanged"
+                                 HorizontalContentAlignment="Stretch">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" />
+                                    <Grid Margin="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding author}"
+                                                   FontWeight="Bold"
+                                                   Grid.Column="0"
+                                                   Grid.Row="0" />
+                                        <TextBlock Text="{Binding creationDate}"
+                                                   FontWeight="Light"
+                                                   Foreground="DimGray"
+                                                   Grid.Column="1"
+                                                   HorizontalAlignment="Right"
+                                                   Grid.Row="0" />
+                                        <TextBlock Text="{Binding content}"
+                                                   Grid.Column="0"
+                                                   Grid.Row="1"
+                                                   Grid.ColumnSpan="2" />
+                                    </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Invitations"></TabItem>
-            <TabItem Header="Invitations"></TabItem>
+            <TabItem Header="Invitations">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Invitation"
+                               FontWeight="Bold"
+                               Grid.Row="0" 
+                               Name="Invitationtb"/>
+                    <ListBox SelectionChanged="lb_students_SelectionChanged"
+                             Name="lb_invitations"
+                             SelectionMode="Single"
+                             Grid.Row="1">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Content="Accept"
+                            Grid.Row="2"
+                            Click="accept_button_click" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Logs">
+                <Grid  Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="1"
+                             IsReadOnly="True"
+                             Name="LogBox" />
+                    <TextBlock Grid.Row="0"
+                               Text="Logs: " />
+                </Grid>
+            </TabItem>
         </TabControl>
         <TextBlock Name="cutb"
                    Text="..."
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top" />
+        <Button Margin="492,0,255,453"
+                Click="Ref_Button_Click"
+                 />
     </Grid>
 </Window>

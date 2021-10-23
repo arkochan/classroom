@@ -13,10 +13,13 @@ namespace classroom.classes
     {
         
         public static ArrayList Allrooms { get; set; }
+        [FirestoreProperty]
+        public ArrayList Invitations { get; set; }
         public User()
         {
             RoomsTeacher = new Dictionary<string, Room>();
             RoomsStudent = new Dictionary<string, Room>();
+            Invitations = new ArrayList();
         }
         [FirestoreProperty]
         public string email { get; set; }
