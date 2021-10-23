@@ -254,10 +254,13 @@ namespace classroom
             //add roomid under users st ref
             CU.RoomsStudentRef.Add(roomid);
             //remove invitaion from fstore
-            Firestore.Firestore.db.Collection("rooms").Document(roomid).UpdateAsync("Invitations", FieldValue.ArrayRemove(roomid));
-            //remove invitaion from local            
+            Firestore.Firestore.db.Collection("users").Document(userid).UpdateAsync("Invitations", FieldValue.ArrayRemove(roomid));
+            Firestore.Firestore.db.Collection("users").Document(userid).UpdateAsync("RoomsStudentRef", FieldValue.ArrayUnion(roomid));
+            //remove invitaion from local
+
             CU.Invitations.Remove(roomid);
             User.Allrooms.Add(roomid);
+
 
         }
 
