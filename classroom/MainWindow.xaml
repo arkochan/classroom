@@ -146,10 +146,35 @@
                         </Grid>
                         <ListBox Name="lb_posts"
                                  SelectionMode="Single"
-                                 Grid.Row="3" SelectionChanged="lb_posts_SelectionChanged">
-                            <ListBox.ItemTemplate>
+                                 Grid.Row="3"
+                                 SelectionChanged="lb_posts_SelectionChanged"
+                                 HorizontalContentAlignment="Stretch">
+                            <ListBox.ItemTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding content}" />
+                                    <Grid Margin="4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding author}"
+                                                   FontWeight="Bold"
+                                                   Grid.Column="0"
+                                                   Grid.Row="0" />
+                                        <TextBlock Text="{Binding creationDate}"
+                                                   FontWeight="Light"
+                                                   Foreground="DimGray"
+                                                   Grid.Column="1"
+                                                   HorizontalAlignment="Right"
+                                                   Grid.Row="0" />
+                                        <TextBlock Text="{Binding content}"
+                                                   Grid.Column="0"
+                                                   Grid.Row="1"
+                                                   Grid.ColumnSpan="2" />
+                                    </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -164,8 +189,8 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TextBox Grid.Row="1"
-                             IsReadOnly="True" 
-                             Name="LogBox"/>
+                             IsReadOnly="True"
+                             Name="LogBox" />
                     <TextBlock Grid.Row="0"
                                Text="Logs: " />
                 </Grid>

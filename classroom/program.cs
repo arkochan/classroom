@@ -97,7 +97,7 @@ namespace classroom
                 if (program.CU.RoomsTeacherRef == null)
                 {
                     program.CU.RoomsTeacherRef = new ArrayList();
-                    status?.Invoke(CU, "program.CU.RoomsTeacherRef was null");
+                    Log( "program.CU.RoomsTeacherRef was null");
                 }
                 if (program.CU.RoomsStudentRef == null) program.CU.RoomsStudentRef = new ArrayList();
                 if (classes.User.Allrooms == null) classes.User.Allrooms = new ArrayList();
@@ -149,7 +149,7 @@ namespace classroom
             //check if student already exists in the class
             if (room.IndexOfStudent(studentUserId) > -1)
             {
-                status?.Invoke(null, $"{studentUserId} Already exists in {roomRef}");//tryctach
+                Log( $"{studentUserId} Already exists in {roomRef}");//tryctach
 
                 return;
             }
@@ -157,7 +157,7 @@ namespace classroom
 
             if (!await task)
             {
-                status?.Invoke(null, $"User {studentUserId} Doesn\'t Exist");
+                Log( $"User {studentUserId} Doesn\'t Exist");
                 return;//tryctach
             }
             //add it to current room's array
@@ -181,7 +181,7 @@ namespace classroom
             }
 
             Room room = User.RoomsTeacher[roomid];
-            status?.Invoke(null, $"{room.Name} loaded");
+            Log( $"{room.Name} loaded");
 
             // newpost.author = CU.user_name;
             room.Postsref.Add(newpost.id);
@@ -195,44 +195,46 @@ namespace classroom
         public async static Task<ArrayList> Getposts(string roomid)
         {
             //int count = 0;
-           
+
             ArrayList postsarray = new ArrayList();
             ArrayList arrayList = new ArrayList();
-            CollectionReference postref= Firestore.Firestore.db.Collection("posts");
+            CollectionReference postref = Firestore.Firestore.db.Collection("posts");
             Query query = postref.WhereEqualTo("roomid", roomid);
-            QuerySnapshot snapshots= await query.GetSnapshotAsync();
+            QuerySnapshot snapshots = await query.GetSnapshotAsync();
 
-           /* DocumentReference docRef = Firestore.Firestore.db.Collection("posts").Document("roomid");
-            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
-            if(snapshot.Exists)
+            /* DocumentReference docRef = Firestore.Firestore.db.Collection("posts").Document("roomid");
+             DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+             if(snapshot.Exists)
+             {
+                 postsarray.Add(snapshot.Id);
+                 Post post = snapshot.ConvertTo<Post>();
+                 arrayList
+             }*/
+
+            foreach (DocumentSnapshot documentSnapshot in snapshots.Documents)
             {
-                postsarray.Add(snapshot.Id);
-                Post post = snapshot.ConvertTo<Post>();
-                arrayList
-            }*/
-            
-            foreach(DocumentSnapshot documentSnapshot in snapshots.Documents)
-            {
-                postsarray.Add(new Post (documentSnapshot.ToDictionary())) ;
+                postsarray.Add(new Post(documentSnapshot.ToDictionary()));
 
                 //Post post = snapshots.
                 //count++;
-               /* Dictionary<string, Object> postDictionary = new Dictionary<string, object>();
-                foreach(object obj in postsarray)
-                {
-                    Post posts=documentSnapshot.ConvertTo<Post>();
-                    postDictionary.Add(posts.id, posts);
-                }*/
-                
+                /* Dictionary<string, Object> postDictionary = new Dictionary<string, object>();
+                 foreach(object obj in postsarray)
+                 {
+                     Post posts=documentSnapshot.ConvertTo<Post>();
+                     postDictionary.Add(posts.id, posts);
+                 }*/
+
             }
             return postsarray;
             //return arrayList;
             //... 
-           // ...
-          //return list_allpost_of_roomid;
+            // ...
+            //return list_allpost_of_roomid;
         }
-
-
+        public static void Log(string s)
+        {
+            status?.Invoke(null, s);
+        }
 
     }
 }
