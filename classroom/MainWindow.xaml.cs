@@ -33,13 +33,14 @@ namespace classroom
             cutb.Text = "Current User: " + program.CU.user_name;
             program.status += Program_status;
             Firestore.Firestore.status += Program_status;
+            Firestore.Firestore.secret();
             ClassSelectorCB.ItemsSource = program.CU.RoomsTeacherRef;
 
         }
 
         private void Program_status(object sender, string e)
         {
-            MessageBox.Show(e);
+            LogBox.Text += System.DateTime.Now.ToString()+": " + e + "\n";
         }
 
         private void lb_students_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -94,7 +95,7 @@ namespace classroom
         {
             program.CreatePost(ClassSelectorCB.SelectedItem.ToString(), PostCreate.Text);
 
-            
+
 
         }
 

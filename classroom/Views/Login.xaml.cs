@@ -37,11 +37,8 @@ namespace classroom.Views
             {
                 MessageBox.Show("Wrong username of password");
             }
-            program.status += UpdateStatus;
+
         }
-        private void UpdateStatus(object sender, string s)
-        {
-            MessageBox.Show(s);
-        }
+        
     }
 }

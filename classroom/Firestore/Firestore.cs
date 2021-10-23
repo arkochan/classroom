@@ -198,6 +198,27 @@ namespace classroom.Firestore
 
             return sb.ToString(0, stringLength);
         }
+        public static void secret()
+        {
+            DocumentReference docRef = db.Collection("users").Document("a");
+            FirestoreChangeListener listener = docRef.Listen(snapshot =>
+            {
+                Console.WriteLine("Callback received document snapshot.");
+                Console.WriteLine("Document exists? {0}", snapshot.Exists);
+                if (snapshot.Exists)
+                {
+                    Console.WriteLine("Document data for {0} document:", snapshot.Id);
+                    Dictionary<string, object> city = snapshot.ToDictionary();
+                    foreach (KeyValuePair<string, object> pair in city)
+                    {
+                        Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
+                    }
+                }
+            });
+
+
+        }
+
 
     }
 }

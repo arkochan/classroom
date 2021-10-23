@@ -125,25 +125,23 @@
                             <TextBox Text="Create a Post"
                                      DockPanel.Dock="Top"
                                      TextWrapping="Wrap"
-                                     AcceptsReturn="True" 
+                                     AcceptsReturn="True"
                                      Grid.Row="0"
-                                     Name="PostCreate"
-                                     />
-                            <DockPanel Grid.Row="1" Margin="0,5,0,5">
+                                     Name="PostCreate" />
+                            <DockPanel Grid.Row="1"
+                                       Margin="0,5,0,5">
                                 <Button Content="post"
-                                        DockPanel.Dock="Right" 
+                                        DockPanel.Dock="Right"
                                         Width="70"
                                         Margin="5,0,0,0"
                                         Name="postbutton"
                                         Click="postbutton_Click" />
                                 <TextBlock Text="Classroom:"
-                                           DockPanel.Dock="Left" 
-                                           VerticalAlignment="Bottom"
-                                           />
+                                           DockPanel.Dock="Left"
+                                           VerticalAlignment="Bottom" />
                                 <ComboBox Margin="5,0,5,0"
-                                          Name="ClassSelectorCB" SelectionChanged="ClassSelectorCB_SelectionChanged">
-
-                                </ComboBox>
+                                          Name="ClassSelectorCB"
+                                          SelectionChanged="ClassSelectorCB_SelectionChanged"></ComboBox>
                             </DockPanel>
                         </Grid>
                         <ListBox Name="lb_posts"
@@ -159,7 +157,19 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Invitations"></TabItem>
-            <TabItem Header="Invitations"></TabItem>
+            <TabItem Header="Logs">
+                <Grid  Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="1"
+                             IsReadOnly="True" 
+                             Name="LogBox"/>
+                    <TextBlock Grid.Row="0"
+                               Text="Logs: " />
+                </Grid>
+            </TabItem>
         </TabControl>
         <TextBlock Name="cutb"
                    Text="..."
